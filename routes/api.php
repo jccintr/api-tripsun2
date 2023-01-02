@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CadastroController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -10,6 +11,7 @@ use App\Http\Controllers\ServicoController;
 use App\Http\Controllers\CidadeController;
 use App\Http\Controllers\ImagensController;
 use App\Http\Controllers\HorariosController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +28,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+// Cadastro Controller ====================================================
+Route::post('/signup',[CadastroController::class,'signUp']);
+// Login Controller ====================================================
+Route::post('/signin',[LoginController::class,'signIn']);
 // Cidade Controller ====================================================
 Route::post('/cidade', [CidadeController::class, 'get']);
 Route::get('/cidade/{id}', [CidadeController::class, 'getById']);
