@@ -8,6 +8,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+
+/*
+Teremos 3 tipos de usuários no sistema:
+
+Admin : pode listar,inserir, alterar e excluir qualquer registro.  role = admin
+Cliente : pode apenas ler os dados e inserir transações.   role = cliente
+Prestador: pode apenas gerenciar os horarios e suas transações. role = prestador
+
+*/
+
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -21,7 +32,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'telefone'
+        'telefone',
+        'role'
     ];
 
     /**
