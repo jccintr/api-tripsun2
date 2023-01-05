@@ -48,6 +48,7 @@ class PrestadorController extends Controller
         $prestador = $this->prestadores->create([
           'nome' => $nome,
           'cidade_id' => $request->cidade_id,
+          'usuario_id' => $request->usuario_id,
           'logotipo' => $imagem_url,
           'endereco' => $endereco,
           'bairro' => $bairro,
@@ -87,6 +88,7 @@ class PrestadorController extends Controller
         $prestador = Prestador::find($id);
         $prestador->nome = $nome;
         $prestador->cidade_id = $request->cidade_id;
+        $prestador->usuario_id = $request->usuario_id;
         $prestador->endereco = $request->endereco;
         $prestador->bairro = $request->bairro;
         $prestador->cep = $request->cep;

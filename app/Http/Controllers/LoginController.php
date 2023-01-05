@@ -17,30 +17,30 @@ public function signInAdmin (Request $request) {
 
     if(!$email or !$password) {
         $array['erro'] = "Nome de usuário e ou senha inválidos";
-        return response()->json($array,400);
+        return response()->json($array,403);
     }
 
     $user = User::select()->where('email', $email)->first();
     if(!$user) {
         $array['erro'] = "Nome de usuário e ou senha inválidos";
-        return response()->json($array,400);
+        return response()->json($array,403);
     }
 
     if($user->role!=='admin'){
         $array['erro'] = "Nome de usuário e ou senha inválidos";
-        return response()->json($array,400);
+        return response()->json($array,403);
     }
-    
+
     if(!password_verify($password, $user->password)) {
         $array['erro'] = "Nome de usuário e ou senha inválidos";
-        return response()->json($array,400);
+        return response()->json($array,403);
     }
 
     $token =  md5(time().rand(0,9999).time());
     $user->token = $token;
     $user->save();
-    
-    return response()->json($user,201);
+
+    return response()->json($user,200);
 
 }
 
@@ -62,7 +62,7 @@ public function signIn(Request $request){
         $array['erro'] = "Nome de usuário e ou senha inválidos";
         return response()->json($array,400);
     }
-    
+
     if(!password_verify($password, $user->password)) {
         $array['erro'] = "Nome de usuário e ou senha inválidos";
         return response()->json($array,400);
@@ -71,8 +71,8 @@ public function signIn(Request $request){
     $token =  md5(time().rand(0,9999).time());
     $user->token = $token;
     $user->save();
-    
-    return response()->json($user,201);
+
+    return response()->json($user,200);
 }
 
 }

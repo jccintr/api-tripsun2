@@ -13,6 +13,7 @@ use App\Http\Controllers\CidadeController;
 use App\Http\Controllers\ImagensController;
 use App\Http\Controllers\HorariosController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Cadastro Controller ====================================================
 Route::post('/signup',[CadastroController::class,'signUp']);
+Route::post('/signup2',[CadastroController::class,'cadastraPrestador']);
 // Login Controller ====================================================
 Route::post('/login',[LoginController::class,'signIn']);
 Route::post('/loginAdmin',[LoginController::class,'signInAdmin']);
@@ -70,4 +72,6 @@ Route::post('/imagens/delete/{id}', [ImagensController::class, 'delete']); // re
 Route::post('/horarios', [HorariosController::class, 'add']); // restrita admin e prestador
 Route::get('/horarios/{idServico}', [HorariosController::class, 'listByServico']);
 Route::get('/horarios/{idServico}/{data}', [HorariosController::class, 'listByDay']);
+// Users Controller =====================================================
+Route::get('/usuarios/prestadores',[UserController::class,'getPrestadores']);
 

@@ -50,7 +50,7 @@ public function cadastraPrestador(Request $request) {
     $email = filter_var($request->email,FILTER_VALIDATE_EMAIL);
     $password = $request->password;
     $telefone = $request->telefone;
-    $role = 'prestador ';
+    $role = 'prestador';
    
     if($name && $email && $password && $telefone) {
         $user = User::select()->where('email', $email)->first();

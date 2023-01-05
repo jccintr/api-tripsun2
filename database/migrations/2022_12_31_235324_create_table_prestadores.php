@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->unsignedBigInteger('cidade_id');
+            $table->unsignedBigInteger('usuario_id');
             $table->string('logotipo');
             $table->string('endereco')->nullable();
             $table->string('bairro')->nullable();
@@ -28,6 +29,8 @@ return new class extends Migration
             $table->timestamps();
             // cria o relacionamento com a tabela cidades
             $table->foreign('cidade_id')->references('id')->on('cidades');
+            // cria o relacionamento com a tabela usuarios
+            $table->foreign('usuario_id')->references('id')->on('users');
           
         });
     }
