@@ -73,5 +73,7 @@ Route::post('/horarios', [HorariosController::class, 'add']); // restrita admin 
 Route::get('/horarios/{idServico}', [HorariosController::class, 'listByServico']);
 Route::get('/horarios/{idServico}/{data}', [HorariosController::class, 'listByDay']);
 // Users Controller =====================================================
-Route::get('/usuarios/prestadores',[UserController::class,'getPrestadores']);
-
+Route::get('/usuarios/prestadores',[UserController::class,'ListPrestadores']);
+Route::get('/usuarios/clientes',[UserController::class,'ListClientes']);
+Route::get('/usuario/{id}',[UserController::class,'getById']);
+Route::post('usuario/update/{id}',[UserController::class,'updateUsuario']);
