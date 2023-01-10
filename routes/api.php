@@ -77,3 +77,4 @@ Route::get('/usuarios/prestadores',[UserController::class,'ListPrestadores']);
 Route::get('/usuarios/clientes',[UserController::class,'ListClientes']);
 Route::get('/usuario/{id}',[UserController::class,'getById']);
 Route::post('usuario/update/{id}',[UserController::class,'updateUsuario']);
+Route::post('usuario/updatepassword/{id}',[UserController::class,'trocaSenhaUsuario']);

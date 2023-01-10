@@ -76,7 +76,29 @@ public function getById($id){
 
 
   }
+  //===========================================================
+  // Atualiza Senha um Usuario POST
+  //===========================================================
+    public function trocaSenhaUsuario($id,Request $request){
 
+
+      $senha = $request->senha;
+      $telefone = $request->telefone;
+
+      if($senha) {
+          $usuario = User::find($id);
+          $password_hash = password_hash($senha, PASSWORD_DEFAULT);
+          $usuario->password = $password_hash;
+          $usuario->save();
+          $array['sucesso'] = "Senha alterado com sucesso.";
+          return response()->json($array,200);
+      } else {
+        $array['erro'] = "Campos obrigatórios não informados.";
+        return response()->json($array,400);
+      }
+
+
+    }
 
 
 }

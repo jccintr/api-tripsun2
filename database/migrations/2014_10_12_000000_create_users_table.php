@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('telefone');
             $table->string('role')->nullable(); // admin - cliente - prestador
             $table->string('token')->nullable();
-            //$table->timestamp('token_expire_at')->nullable();
+            $table->timestamp('token_expire_at')->nullable();
 
             $table->rememberToken();
             $table->timestamps();
