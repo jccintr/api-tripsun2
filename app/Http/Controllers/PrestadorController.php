@@ -29,7 +29,7 @@ class PrestadorController extends Controller
       return response()->json($prestadores->values()->all(),200);
   }
 //============================================================
-// Adiciona uma subcategoria POST
+// Adiciona uma Prestador POST
 //============================================================
   public function add(Request $request)
   {
@@ -39,6 +39,7 @@ class PrestadorController extends Controller
      $cep = $request->cep;
      $contato = $request->contato;
      $telefone = $request->telefone;
+     $email = $request->email;
      $cnpj = $request->cnpj;
      $ie = $request->ie;
      $imagem = $request->file('logotipo');
@@ -55,6 +56,7 @@ class PrestadorController extends Controller
           'cep' => $cep,
           'contato' => $contato,
           'telefone' => $telefone,
+          'email' => $email,
           'cnpj' => $cnpj,
           'ie' => $ie
         ]);
@@ -93,6 +95,7 @@ class PrestadorController extends Controller
         $prestador->bairro = $request->bairro;
         $prestador->cep = $request->cep;
         $prestador->contato = $request->contato;
+        $prestador->email = $request->email;
         $prestador->telefone = $request->telefone;
         $prestador->cnpj = $request->cnpj;
         $prestador->ie = $request->ie;

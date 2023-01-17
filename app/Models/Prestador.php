@@ -9,7 +9,7 @@ class Prestador extends Model
 {
     use HasFactory;
     protected $table = 'prestadores';
-    protected $fillable = ['nome','cidade_id','usuario_id','logotipo','endereco','bairro','cep','contato','telefone','cnpj','ie'];
+    protected $fillable = ['nome','cidade_id','usuario_id','logotipo','endereco','bairro','cep','contato','email','telefone','cnpj','ie'];
 
     public function servicos(){
         // uma cidade pode ter 0 ou muitas categorias
