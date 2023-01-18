@@ -12,30 +12,28 @@ use App\Models\Prestador;
 
 class ServicoController extends Controller
 {
-   
+
     public function __construct(Servico $servicos,Categoria $categorias,Prestador $prestadores,Subcategoria $subcategorias){
         $this->servicos = $servicos;
         $this->categorias = $categorias;
         $this->subcategorias = $subcategorias;
         $this->prestadores = $prestadores;
       }
-  
+
   //===========================================================
   // Lista todas os Serviços GET
   //===========================================================
   public function list()
   {
-  
+
       $servicos = Servico::orderBy('nome')->with('prestador')->get();
-    //  $servicos = $this->servicos->with('prestador')->get();
-  
-  
+
       foreach ($servicos as $servico) {
         $servico->valor = $servico->valor / 100;
         $cidade = Cidade::find($servico['cidade_id']);
         $servico['nome_cidade'] = $cidade['nome'];
       }
-  
+
       //$categorias_ordenado = $categorias->sortBy('nome');
       return response()->json($servicos->values()->all(),200);
   }
@@ -44,7 +42,7 @@ class ServicoController extends Controller
   //============================================================
   public function add(Request $request)
   {
-  
+
    $categoria = $request->categoria_id;
    $subcategoria = $request->subcategoria_id;
    $cidade = $request->cidade_id;
@@ -52,9 +50,9 @@ class ServicoController extends Controller
    $nome = $request->nome;
    $latitude = $request->latitude;
    $longitude = $request->longitude;
-  
+
   if($categoria && $subcategoria && $cidade && $prestador && $nome && $latitude && $longitude){
-  
+
     $servico = $this->servicos->create([
       'nome' => $nome,
       'prestador_id' => $prestador,
@@ -77,36 +75,36 @@ class ServicoController extends Controller
       'stars' => 5.0
     ]);
     return response()->json($servico,201);
-  
+
   }else {
     $array['erro'] = "Requisição mal formatada. ". $categoria;
     return response()->json($array,400);
   }
-  
-  
+
+
   }
-  
+
   //================================================================
   // Recupera um Serviço por Id GET
   //================================================================
   public function getById($id) {
-  
+
        $servico = Servico::find($id);
-  
+
        if ($servico === null){
-  
+
           return response()->json(['erro'=>'Serviço não encontrado'],404);
        } else {
           $servico->valor = $servico->valor / 100;
           return response()->json($servico,200);
        }
-  
+
   }
   //================================================================
   // Atualiza um Prestador POST
   //================================================================
   public function update($id,Request $request){
-  
+
     $categoria = $request->categoria_id;
     $subcategoria = $request->subcategoria_id;
     $cidade = $request->cidade_id;
@@ -114,7 +112,7 @@ class ServicoController extends Controller
     $nome = $request->nome;
     $latitude = $request->latitude;
     $longitude = $request->longitude;
-  
+
     if($categoria && $subcategoria && $cidade && $prestador && $nome && $latitude && $longitude){
         $servico = Servico::find($id);
         $servico->nome = $nome;
@@ -146,7 +144,7 @@ class ServicoController extends Controller
   // outros
   //=========================================
         public function seed() {
-  
+
   /*
           $cidadeId = 3; //brasa
           $baseLatitude = '-22.4'; //brasa
@@ -156,27 +154,27 @@ class ServicoController extends Controller
           $cidadeId = 3; //brasa
           $baseLatitude = '-22.4'; //brasa
           $baseLongitude = '-45.6'; //brasa
-  
-  
-  
+
+
+
           $aventuras = ['Legal','Muito Legal','Imperdível','Emocionante'];
           $nomeServico = "Aventura ";
           $descricao_curta = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-  
+
           $atrativos =  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-  
+
           $itens_fornecidos = "item 1, item 2, item 3...";
           $itens_obrigatorios = "item obrigatório 1, item obrigatório 2";
-  
+
           $endereco = "Rua x, 345 - Vila Maria";
           $ponto_encontro = "Avenida Y, 321 - Centro";
-  
-  
-  
+
+
+
           for($i=0;$i<15;$i++) {
-  
-  
-  
+
+
+
             $novoServico = new Servico();
             $idSubCategoria = rand(2,16);
             $subcategoria =  $this->subcategorias->find($idSubCategoria);
@@ -188,10 +186,10 @@ class ServicoController extends Controller
             $novoServico->nome = $nomeServico.$aventuras[rand(0,3)];
             $novoServico->descricao_curta = $descricao_curta;
             $novoServico->stars = rand(3, 4).'.'.rand(0, 9);
-  
+
             $novoServico->latitude =  $baseLatitude.rand(0,9).'30907';
             $novoServico->longitude = $baseLongitude.rand(0,9).'82795';
-  
+
             $novoServico->atrativos = $atrativos;
             $novoServico->duracao = rand(1,3).'h';
             $novoServico->itens_fornecidos = $itens_fornecidos;
@@ -203,15 +201,15 @@ class ServicoController extends Controller
             //$destaque = rand(1,4);
             $novoServico->destaque = rand(1,4)===4 ? true : false;
             $novoServico->save();
-  
+
           }
           $retorno = ['mensagem' => 'Serviços criado com sucesso.'];
           return response()->json($retorno,201);
-  
+
         }
   //============================================================
         public function getCityByCoords(Request $request){
-  
+
           $key = env('MAPS_KEY', null);
           $lat = $request->latitude;
           $lng = $request->longitude;
@@ -222,7 +220,7 @@ class ServicoController extends Controller
           curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
           $res = curl_exec($ch);
           curl_close($ch);
-  
+
           $data = json_decode($res,true);
           $logradouro = $data['results'][0]['address_components'][1]['short_name'];
           $numero = $data['results'][0]['address_components'][0]['short_name'];
@@ -235,20 +233,20 @@ class ServicoController extends Controller
           $ret['cep'] = $cep;
           $ret['logradouro'] = $logradouro;
           $ret['numero'] = $numero;
-  
+
           return response()->json($ret,200);
-  
+
         }
   //=====================================================================
         public function searchGeo(Request $request) {
           $key = env('MAPS_KEY', null);
-  
+
           $lat = $request->latitude;
           $lng = $request->longitude;
-  
+
           $coord = urlencode($lat.",".$lng);
           $url = 'https://maps.googleapis.com/maps/api/geocode/json?address='.$coord.'&key='.$key;
-  
+
          /*
           $city = $request->city;
           $city = urlencode($city);
@@ -256,7 +254,7 @@ class ServicoController extends Controller
                 $url = 'https://maps.googleapis.com/maps/api/geocode/json?address='.$city.'&key='.$key;
           }
           */
-  
+
           $ch = curl_init();
           curl_setopt($ch, CURLOPT_URL, $url);
           curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -264,7 +262,7 @@ class ServicoController extends Controller
           curl_close($ch);
           return json_decode($res, true);
       }
-  
+
   //================================================================
       public function searchGeo2(Request $request) {
         $key = env('MAPS_KEY', null);
@@ -278,8 +276,8 @@ class ServicoController extends Controller
         curl_close($ch);
         return json_decode($res, true);
     }
-  
-  
+
+
 
 
 
