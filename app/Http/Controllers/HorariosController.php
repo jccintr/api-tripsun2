@@ -7,7 +7,7 @@ use App\Models\Horario;
 
 class HorariosController extends Controller
 {
- 
+
 //================================================================
 // Adiciona um Horario POST
 //================================================================
@@ -33,7 +33,7 @@ public function add(Request $request)
 
   if(checkdate( $mes,$dia,$ano)) {  // data válida
 
-    $horarios = Horario::select()->where('servico_id', $servico_id)->where('data', $data)->where('hora',$hora)->count();;
+    $horarios = Horario::select()->where('servico_id', $servico_id)->where('data', $data)->where('hora',$hora)->count();
     $data_atual = date('Y-m-d');
 
     if($data < $data_atual){
