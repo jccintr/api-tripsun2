@@ -70,8 +70,9 @@ Route::get('/imagens/{idServico}', [ImagensController::class, 'listByServico']);
 Route::post('/imagens/delete/{id}', [ImagensController::class, 'delete']); // restrita admin
 // Horarios Controller =====================================================
 Route::post('/horarios', [HorariosController::class, 'add']); // restrita admin e prestador
-Route::get('/horarios/{idServico}', [HorariosController::class, 'listByServico']);
-Route::get('/horarios/{idServico}/{data}', [HorariosController::class, 'listByDay']);
+Route::get('/horarios/{idServico}', [HorariosController::class, 'index']);
+Route::delete('/horarios/{idServico}', [HorariosController::class, 'destroy']);
+//Route::get('/horarios/{idServico}/{data}', [HorariosController::class, 'listByDay']);
 // Users Controller =====================================================
 Route::get('/usuarios/prestadores',[UserController::class,'ListPrestadores']);
 Route::get('/usuarios/clientes',[UserController::class,'ListClientes']);

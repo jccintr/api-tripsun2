@@ -71,8 +71,10 @@ class ServicoController extends Controller
       'horario' => $request->horario,
       'duracao' => $request-> duracao,
       'percentual_plataforma' => $request->percentual_plataforma,
-      'valor' => $request->valor,
+      'preco' => $request->preco,
+      'vagas' => $request->vagas,
       'stars' => 5.0
+
     ]);
     return response()->json($servico,201);
 
@@ -128,7 +130,8 @@ class ServicoController extends Controller
         $servico->horario = $request->horario;
         $servico->ponto_encontro = $request->ponto_encontro;
         $servico->percentual_plataforma = $request->percentual_plataforma;
-        $servico->valor = $request->valor * 100;
+        $servico->preco = $request->preco;
+        $servico->vagas = $request->vagas;
         $servico->destaque = $request->destaque;
         $servico->latitude = $latitude;
         $servico->longitude = $longitude;

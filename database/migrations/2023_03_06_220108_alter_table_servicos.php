@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('horarios', function (Blueprint $table) {
+        Schema::table('servicos', function (Blueprint $table) {
 
-            $table->integer('weekday')->nullable();
-            $table->string('horas')->nullable();
-            
-          });
+            $table->dropColumn('valor');
+            $table->decimal('preco', 5, 2)->default(0);
+            $table->integer('vagas')->default(1);
+         });
     }
 
     /**
@@ -28,9 +28,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('horarios', function (Blueprint $table) {
-            $table->dropColumn('weekday');
-            $table->dropColumn('horas');
+        Schema::table('servicos', function (Blueprint $table) {
+
+            $table->dropColumn('preco');
+            $table->dropColumn('vagas');
           });
     }
 };

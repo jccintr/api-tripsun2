@@ -14,54 +14,27 @@ class HorariosController extends Controller
 
 public function add(Request $request)
 {
-  $array = ['erro'=>''];
 
-  $servico_id = $request->servico_id;
-  $ano = intval($request->ano);
-  $mes = intval($request->mes);
-  $dia = intval($request->dia);
-  $hora = $request->hora;
-  $duracao = $request->duracao;
-  $quant = intval($request->quant);
-  $ativo = $request->ativo;
+  $servico_id = intval($request->servico_id);
+  $weekDay = intval($request->weekDay);
+  $horas = $request->horas;
 
+  if($servico_id  and $horas ){
 
-  $dia = ($dia < 10) ? '0'.$dia : $dia;
-  $mes = ($mes < 10) ? '0'.$mes : $mes;
+    $novoHorario = new Horario();
+    $novoHorario->servico_id = $servico_id;
+    $novoHorario->weekday = $weekDay;
+    $novoHorario->horas = $horas;
+    $novoHorario->save();
 
-  $data = $ano.'-'.$mes.'-'.$dia;
-
-  if(checkdate( $mes,$dia,$ano)) {  // data válida
-
-    $horarios = Horario::select()->where('servico_id', $servico_id)->where('data', $data)->where('hora',$hora)->count();
-    $data_atual = date('Y-m-d');
-
-    if($data < $data_atual){
-        $array['erro'] = "Data inferior a data atual.";
-        return response()->json($array,400);
-    }
-    if ($horarios===0){ // horario ainda não cadastrado
-        $retorno = Horario::create([
-            'servico_id' => $servico_id,
-            'data' => $data,
-            'hora' => $hora,
-            'duracao' => $duracao,
-            'quant' => $quant,
-            'ativo' => $ativo
-        ]);
-        return response()->json($retorno,201);
-
-    }
-    else {
-        $array['erro'] = "Horário já cadastrado";
-        return response()->json($array,400);
-    }
-
+    return response()->json($novoHorario,201);
 
   } else {
-        $array['erro'] = "Data inválida";
-        return response()->json($array,400);
-  }
+
+    $array['erro'] = "Valores obrigatórios não informados.";
+    return response()->json($array,400);
+  $array['erro'] = "Valores obrigatórios não informados.";
+ }
 
 
   }
@@ -70,11 +43,11 @@ public function add(Request $request)
 // Recupera os horarios de um Serviço GET
 //================================================================
 
-public function listByServico($idServico)
+public function index($idServico)
 
 {
 
-  $horarios = Horario::where('servico_id',$idServico)->orderBy('data')->get();
+  $horarios = Horario::where('servico_id',$idServico)->orderBy('weekday')->get();
   if ($horarios) {
     return response()->json($horarios,200);
   } else {
@@ -83,29 +56,14 @@ public function listByServico($idServico)
 
 }
 
-//===============================================================
-// Recupera os horarios de uma Determinada Data GET
-//================================================================
-public function listByDay($idServico,$data)
-
-{
-
-
-$horarios = Horario::where('servico_id',$idServico)->where('data',$data)->orderBy('hora')->get();
- if ($horarios) {
-    return response()->json($horarios,200);
-  } else {
-    return response()->json(['erro'=>'Horarios não encontradas'],404);
+public function destroy($id){
+  $horario = Horario::find($id);
+  if ($horario){
+    $horario->delete();
+    $array['sucesso'] = "Horário excluído com sucesso.";
+    return response()->json($array,200);
   }
-
-
 }
-
-
-
-
-
-
 
 
 }
