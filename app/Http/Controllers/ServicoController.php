@@ -163,16 +163,13 @@ class ServicoController extends Controller
           $aventuras = ['Legal','Muito Legal','Imperdível','Emocionante'];
           $nomeServico = "Aventura ";
           $descricao_curta = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-
           $atrativos =  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-
           $itens_fornecidos = "item 1, item 2, item 3...";
           $itens_obrigatorios = "item obrigatório 1, item obrigatório 2";
-
           $endereco = "Rua x, 345 - Vila Maria";
           $ponto_encontro = "Avenida Y, 321 - Centro";
 
-
+          
 
           for($i=0;$i<15;$i++) {
 
