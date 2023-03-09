@@ -90,11 +90,11 @@ class CidadeController extends Controller
           $servicoLongitude = (float)$servico['longitude'];
           //pega as imagens do serviço
           $servico['imagens'] = Imagens::where('servico_id',$servico['id'])->get();
-          
+
           $servico['imagem'] = $findSubcat['imagem'];
           $servico['marcador'] = $findSubcat['marcador'];
           $servico['distancia'] =  round(sqrt(pow(69.1 * ($servicoLatitude - $lat), 2) + pow(69.1 * ($lng - $servicoLongitude) * cos($servicoLatitude / 57.3), 2)),1);
-          $servico['valor'] = $servico['valor'] / 100;
+          $servico['valor'] = $servico['preco'];
 
           //$servico['preco'] = rand(3,9).rand(0,9).',00';
           }
