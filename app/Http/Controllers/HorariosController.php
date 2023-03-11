@@ -56,6 +56,10 @@ public function index($idServico)
 
 }
 
+
+//===============================================================
+// Deleta um registro de horario  de um Serviço DELETE
+//================================================================
 public function destroy($id){
   $horario = Horario::find($id);
   if ($horario){
@@ -63,6 +67,48 @@ public function destroy($id){
     $array['sucesso'] = "Horário excluído com sucesso.";
     return response()->json($array,200);
   }
+}
+
+public function index2($idServico){
+
+  $retorno = [];
+
+  //  Pegando os horarios brutos
+  $avails = Horario::where('servico_id',$idServico)->orderBy('weekday')->get();
+  $availWeekdays = [];
+  foreach($avails as $item) {
+    $availWeekdays[$item['weekday']] = explode(';', $item['horas']);
+  }
+
+  // - Gerar disponibilidade real
+   for($q=0;$q<20;$q++) {
+       $timeItem = strtotime('+'.$q.' days');
+       $weekday = date('w', $timeItem);
+
+       if(in_array($weekday, array_keys($availWeekdays))) {
+           $hours = [];
+
+           $dayItem = date('Y-m-d', $timeItem);
+
+           foreach($availWeekdays[$weekday] as $hourItem) {
+               $dayFormated = $dayItem.' '.$hourItem.':00';
+              // if(!in_array($dayFormated, $appointments)) {
+                   $hours[] = $hourItem;
+              // }
+           }
+
+           if(count($hours) > 0) {
+               $availability[] = [
+                   'date' => $dayItem,
+                   'hours' => $hours
+               ];
+           }
+
+       }
+   }
+
+return response()->json($availability,200);
+
 }
 
 

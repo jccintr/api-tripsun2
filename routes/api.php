@@ -71,6 +71,7 @@ Route::post('/imagens/delete/{id}', [ImagensController::class, 'delete']); // re
 // Horarios Controller =====================================================
 Route::post('/horarios', [HorariosController::class, 'add']); // restrita admin e prestador
 Route::get('/horarios/{idServico}', [HorariosController::class, 'index']);
+Route::get('/horarios/disponiveis/{idServico}', [HorariosController::class, 'index2']);
 Route::delete('/horarios/{idServico}', [HorariosController::class, 'destroy']);
 //Route::get('/horarios/{idServico}/{data}', [HorariosController::class, 'listByDay']);
 // Users Controller =====================================================
