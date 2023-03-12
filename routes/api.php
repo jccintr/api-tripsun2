@@ -14,6 +14,7 @@ use App\Http\Controllers\ImagensController;
 use App\Http\Controllers\HorariosController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,9 @@ Route::post('/geo', [ServicoController::class, 'getCityByCoords']);
 Route::post('/imagens', [ImagensController::class, 'add']); // restrita admin
 Route::get('/imagens/{idServico}', [ImagensController::class, 'listByServico']);
 Route::post('/imagens/delete/{id}', [ImagensController::class, 'delete']); // restrita admin
+// Reviews Controller =====================================================
+Route::get('/reviews/{idServico}', [ReviewController::class, 'index']);
+Route::post('/reviews', [ReviewController::class, 'store']);
 // Horarios Controller =====================================================
 Route::post('/horarios', [HorariosController::class, 'add']); // restrita admin e prestador
 Route::get('/horarios/{idServico}', [HorariosController::class, 'index']);

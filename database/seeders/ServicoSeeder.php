@@ -104,12 +104,19 @@ class ServicoSeeder extends Seeder
             'imagem' => "imagens/servicos/mergulho3.jpeg"
          ]);
          // reviews da atividade
-         for($j=0;$j<10;$j++) {
 
+         for($j=0;$j<10;$j++) {
+            $dia = rand(1,28);
+            $dia < 10 ? "0".$dia : $dia;
+            $mes = rand(1,12);
+            $mes < 10 ? "0".$mes : $mes;
+            $ano = rand(2021,2022);
+            $data = date('Y-m-d',strtotime($ano."-".$mes."-".$dia));
             DB::table('reviews')->insert([
                'usuario_id' => 3,
                'servico_id' => $idServico,
                'rate' => rand(3, 4).'.'.rand(0, 9),
+               'data' => $data,
                'message' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                
             ]);

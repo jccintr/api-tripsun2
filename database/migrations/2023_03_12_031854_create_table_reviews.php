@@ -19,6 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('servico_id');
             $table->float('rate');
             $table->string('message');
+            $table->date('data');
+           // $table->boolean('aprovado')->defalt(false);
             $table->timestamps();
              // cria o relacionamento com a tabela usuarios
              $table->foreign('usuario_id')->references('id')->on('users');
@@ -34,7 +36,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_reviews');
+        Schema::dropIfExists('reviews');
     }
 };
 

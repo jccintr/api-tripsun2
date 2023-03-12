@@ -33,7 +33,7 @@ public function add(Request $request)
 
     $array['erro'] = "Valores obrigatórios não informados.";
     return response()->json($array,400);
-  $array['erro'] = "Valores obrigatórios não informados.";
+    
  }
 
 
