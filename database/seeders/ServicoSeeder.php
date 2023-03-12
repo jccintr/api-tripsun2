@@ -103,11 +103,23 @@ class ServicoSeeder extends Seeder
             'servico_id' => $idServico,
             'imagem' => "imagens/servicos/mergulho3.jpeg"
          ]);
+         // reviews da atividade
+         for($j=0;$j<10;$j++) {
+
+            DB::table('reviews')->insert([
+               'usuario_id' => 3,
+               'servico_id' => $idServico,
+               'rate' => rand(3, 4).'.'.rand(0, 9),
+               'message' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+               
+            ]);
+
+         }
+
+
+        
       }
-/*
-      $cidadeId = 2; // Guarujá   -23.98506436031373, -46.25449799601881
-      $baseLatitude = '-23.9'; //brasa
-      $baseLongitude = '-46.2'; //brasa*/
+
     }
    }
 }
