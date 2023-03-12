@@ -81,7 +81,7 @@ public function index2($idServico){
   }
 
   // - Gerar disponibilidade real
-   for($q=0;$q<20;$q++) {
+   for($q=0;$q<30;$q++) {
        $timeItem = strtotime('+'.$q.' days');
        $weekday = date('w', $timeItem);
 
