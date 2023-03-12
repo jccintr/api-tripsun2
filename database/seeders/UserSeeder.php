@@ -41,5 +41,14 @@ class UserSeeder extends Seeder
             'telefone' => "35-99912-2008",
             'role' => 'cliente'      
         ]);
+
+        DB::table('users')->insert([
+            'name' => "admin",
+            'email' => "tripsunoficial@gmail.com",
+            'password' => password_hash('123', PASSWORD_DEFAULT),
+            'token' => md5(time().rand(0,9999).time()),
+            'telefone' => "35-99912-2008",
+            'role' => 'admin'      
+        ]);
     }
 }
