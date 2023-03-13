@@ -13,9 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('table_agendamentos', function (Blueprint $table) {
+        Schema::create('agendamentos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('usuario_id');
+            $table->unsignedBigInteger('servico_id');
+            $table->datetime('data_agendamento');
+            $table->integer('quantidade')->default(1);
+            $table->decimal('total', 5, 2)->default(0);
+            $table->decimal('valor_plataforma', 5, 2)->default(0);
             $table->timestamps();
+            // cria o relacionamento com a tabela users
+            $table->foreign('usuario_id')->references('id')->on('users');
+            // cria o relacionamento com a tabela servicos
+            $table->foreign('servico_id')->references('id')->on('servicos');
         });
     }
 
@@ -26,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_agendamentos');
+        Schema::dropIfExists('agendamentos');
     }
 };
