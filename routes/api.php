@@ -15,6 +15,7 @@ use App\Http\Controllers\HorariosController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\AgendamentoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,3 +86,6 @@ Route::get('/usuarios/clientes',[UserController::class,'ListClientes']);
 Route::get('/usuario/{id}',[UserController::class,'getById']);
 Route::post('usuario/update/{id}',[UserController::class,'updateUsuario']);
 Route::post('usuario/updatepassword/{id}',[UserController::class,'trocaSenhaUsuario']);
+// Agendamento Controller =====================================================
+Route::post('/agendamentos', [AgendamentoController::class, 'store']);
+Route::get('/agendamentos', [AgendamentoController::class, 'index']);

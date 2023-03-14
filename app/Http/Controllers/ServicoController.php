@@ -124,7 +124,7 @@ class ServicoController extends Controller
         $servico->prestador_id = $prestador;
         $servico->descricao_curta = $request->descricao_curta;
         $servico->atrativos = $request->atrativos;
-        $servico->duracao = $request-> duracao;
+        $servico->duracao = $request->duracao;
         $servico->itens_fornecidos = $request->itens_fornecidos;
         $servico->itens_obrigatorios = $request->itens_obrigatorios;
         $servico->horario = $request->horario;
@@ -143,70 +143,63 @@ class ServicoController extends Controller
        return response()->json($array,400);
     }
   }
-  //=========================================
-  // outros
-  //=========================================
-        public function seed() {
-
-  /*
-          $cidadeId = 3; //brasa
-          $baseLatitude = '-22.4'; //brasa
-          $baseLongitude = '-45.6'; //brasa
-  */
-   // -23.968355398768285, -46.31950309285193  guaruja
-          $cidadeId = 3; //brasa
-          $baseLatitude = '-22.4'; //brasa
-          $baseLongitude = '-45.6'; //brasa
 
 
 
-          $aventuras = ['Legal','Muito Legal','Imperdível','Emocionante'];
-          $nomeServico = "Aventura ";
-          $descricao_curta = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-          $atrativos =  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-          $itens_fornecidos = "item 1, item 2, item 3...";
-          $itens_obrigatorios = "item obrigatório 1, item obrigatório 2";
-          $endereco = "Rua x, 345 - Vila Maria";
-          $ponto_encontro = "Avenida Y, 321 - Centro";
-
-          
-
-          for($i=0;$i<15;$i++) {
+ /* 
+  public function seed() {
 
 
+ //     $cidadeId = 3; //brasa
+  //    $baseLatitude = '-22.4'; //brasa
+  //    $baseLongitude = '-45.6'; //brasa
 
-            $novoServico = new Servico();
-            $idSubCategoria = rand(2,16);
-            $subcategoria =  $this->subcategorias->find($idSubCategoria);
-            $categoria = $this->categorias->find($subcategoria->categoria_id);
-            $novoServico->cidade_id = $cidadeId;
-            $novoServico->categoria_id = $categoria->id;
-            $novoServico->subcategoria_id = $idSubCategoria;
-            $novoServico->prestador_id = rand(6,10);
-            $novoServico->nome = $nomeServico.$aventuras[rand(0,3)];
-            $novoServico->descricao_curta = $descricao_curta;
-            $novoServico->stars = rand(3, 4).'.'.rand(0, 9);
+// -23.968355398768285, -46.31950309285193  guaruja
+      $cidadeId = 3; //brasa
+      $baseLatitude = '-22.4'; //brasa
+      $baseLongitude = '-45.6'; //brasa
+      $aventuras = ['Legal','Muito Legal','Imperdível','Emocionante'];
+      $nomeServico = "Aventura ";
+      $descricao_curta = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+      $atrativos =  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+      $itens_fornecidos = "item 1, item 2, item 3...";
+      $itens_obrigatorios = "item obrigatório 1, item obrigatório 2";
+      $endereco = "Rua x, 345 - Vila Maria";
+      $ponto_encontro = "Avenida Y, 321 - Centro";
 
-            $novoServico->latitude =  $baseLatitude.rand(0,9).'30907';
-            $novoServico->longitude = $baseLongitude.rand(0,9).'82795';
+      for($i=0;$i<15;$i++) {
 
-            $novoServico->atrativos = $atrativos;
-            $novoServico->duracao = rand(1,3).'h';
-            $novoServico->itens_fornecidos = $itens_fornecidos;
-            $novoServico->itens_obrigatorios = $itens_obrigatorios;
-            $novoServico->horario = rand(9,16).'h';
-            $novoServico->endereco = $endereco;
-            $novoServico->ponto_encontro = $ponto_encontro;
-            $novoServico->valor = rand(1,9).'000';
-            //$destaque = rand(1,4);
-            $novoServico->destaque = rand(1,4)===4 ? true : false;
-            $novoServico->save();
+        $novoServico = new Servico();
+        $idSubCategoria = rand(2,16);
+        $subcategoria =  $this->subcategorias->find($idSubCategoria);
+        $categoria = $this->categorias->find($subcategoria->categoria_id);
+        $novoServico->cidade_id = $cidadeId;
+        $novoServico->categoria_id = $categoria->id;
+        $novoServico->subcategoria_id = $idSubCategoria;
+        $novoServico->prestador_id = rand(6,10);
+        $novoServico->nome = $nomeServico.$aventuras[rand(0,3)];
+        $novoServico->descricao_curta = $descricao_curta;
+        $novoServico->stars = rand(3, 4).'.'.rand(0, 9);
+        $novoServico->latitude =  $baseLatitude.rand(0,9).'30907';
+        $novoServico->longitude = $baseLongitude.rand(0,9).'82795';
+        $novoServico->atrativos = $atrativos;
+        $novoServico->duracao = rand(1,3).'h';
+        $novoServico->itens_fornecidos = $itens_fornecidos;
+        $novoServico->itens_obrigatorios = $itens_obrigatorios;
+        $novoServico->horario = rand(9,16).'h';
+        $novoServico->endereco = $endereco;
+        $novoServico->ponto_encontro = $ponto_encontro;
+        $novoServico->valor = rand(1,9).'000';
+        //$destaque = rand(1,4);
+        $novoServico->destaque = rand(1,4)===4 ? true : false;
+        $novoServico->save();
 
-          }
-          $retorno = ['mensagem' => 'Serviços criado com sucesso.'];
-          return response()->json($retorno,201);
+      }
+      $retorno = ['mensagem' => 'Serviços criado com sucesso.'];
+      return response()->json($retorno,201);
 
-        }
+    }
+   */     
   //============================================================
         public function getCityByCoords(Request $request){
 
