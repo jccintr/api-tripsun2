@@ -26,7 +26,6 @@ public function signUp(Request $request) {
 
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
         $token = md5(time().rand(0,9999).time());
-
         $newUser = new User();
         $newUser->name = $name;
         $newUser->email = $email;
@@ -38,6 +37,9 @@ public function signUp(Request $request) {
         if($newUser){
             return response()->json($newUser,201);
         }
+     } else {
+       $array['erro'] = "Campos obrigatórios não informados.";
+       return response()->json($array,400);
      }
 
 }

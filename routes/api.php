@@ -83,6 +83,7 @@ Route::delete('/horarios/{id}', [HorariosController::class, 'destroy']);
 // Users Controller =====================================================
 Route::get('/usuarios/prestadores',[UserController::class,'ListPrestadores']);
 Route::get('/usuarios/clientes',[UserController::class,'ListClientes']);
+Route::get('/user/{token}',[UserController::class,'getUser']);
 Route::get('/usuario/{id}',[UserController::class,'getById']);
 Route::post('usuario/update/{id}',[UserController::class,'updateUsuario']);
 Route::post('usuario/updatepassword/{id}',[UserController::class,'trocaSenhaUsuario']);
