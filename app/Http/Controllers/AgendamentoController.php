@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Agendamento;
 use App\Models\Servico;
+use App\Models\User;
+
 
 class AgendamentoController extends Controller
 {
@@ -15,6 +17,12 @@ class AgendamentoController extends Controller
 
     $agendamentos = Agendamento::All();
     if ($agendamentos) {
+      foreach ($agendamentos as $agendamento) {
+        $user = User::find($agendamento->usuario_id);
+        $servico = Servico::find($agendamento->servico_id);
+        $agendamento['user'] = $user;
+        $agendamento['servico'] = $servico;
+      }
       return response()->json($agendamentos,200);
     } else {
       return response()->json(['erro'=>'Agendamentos não encontradas'],404);
