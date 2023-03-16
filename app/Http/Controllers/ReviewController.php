@@ -4,20 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Review;
+use App\Models\User;
 
 class ReviewController extends Controller
 {
     public function index($idServico)
 
     {
-    
+
       $reviews = Review::where('servico_id',$idServico)->orderBy('data','desc')->get();
       if ($reviews) {
+        foreach ($reviews as $review) {
+          $user = User::find($review->usuario_id);
+          $review['user'] = $user;
+        }
         return response()->json($reviews,200);
       } else {
         return response()->json(['erro'=>'Horarios não encontradas'],404);
       }
-    
+
     }
 
     public function store(Request $request)
@@ -43,7 +48,7 @@ class ReviewController extends Controller
 
     $array['erro'] = "Valores obrigatórios não informados.";
     return response()->json($array,400);
-  
+
  }
 
 

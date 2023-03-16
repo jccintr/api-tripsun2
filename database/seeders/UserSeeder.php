@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'password' => password_hash('123', PASSWORD_DEFAULT),
             'token' => md5(time().rand(0,9999).time()),
             'telefone' => "35-99912-2008",
-            'role' => 'admin'      
+            'role' => 'admin'
         ]);
 
         DB::table('users')->insert([
@@ -30,16 +30,25 @@ class UserSeeder extends Seeder
             'password' => password_hash('123', PASSWORD_DEFAULT),
             'token' => md5(time().rand(0,9999).time()),
             'telefone' => "35-99912-2008",
-            'role' => 'prestador'      
+            'role' => 'prestador'
         ]);
 
         DB::table('users')->insert([
-            'name' => "Joaquin Teixeira",
+            'name' => "Joaquim Teixeira",
             'email' => "joaquim@gmail.com",
             'password' => password_hash('123', PASSWORD_DEFAULT),
             'token' => md5(time().rand(0,9999).time()),
             'telefone' => "35-99912-2008",
-            'role' => 'cliente'      
+            'role' => 'cliente'
+        ]);
+
+        DB::table('users')->insert([
+            'name' => "Elisa Maria Lobo dos Santos",
+            'email' => "elisa@gmail.com",
+            'password' => password_hash('123', PASSWORD_DEFAULT),
+            'token' => md5(time().rand(0,9999).time()),
+            'telefone' => "35-99912-2008",
+            'role' => 'cliente'
         ]);
 
         DB::table('users')->insert([
@@ -48,7 +57,7 @@ class UserSeeder extends Seeder
             'password' => password_hash('123', PASSWORD_DEFAULT),
             'token' => md5(time().rand(0,9999).time()),
             'telefone' => "35-99912-2008",
-            'role' => 'admin'      
+            'role' => 'admin'
         ]);
     }
 }

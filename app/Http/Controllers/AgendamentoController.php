@@ -12,29 +12,29 @@ class AgendamentoController extends Controller
   public function index()
 
   {
-  
+
     $agendamentos = Agendamento::All();
     if ($agendamentos) {
       return response()->json($agendamentos,200);
     } else {
       return response()->json(['erro'=>'Agendamentos não encontradas'],404);
     }
-  
+
   }
 
 
 
     public function store(Request $request)
     {
-    
+
       $servico_id = intval($request->servico_id);
       $usuario_id = intval($request->usuario_id);
       $quantidade = intval($request->quantidade);
       $data_agendamento = $request->data_agendamento;
       $total = $request->total;
-      
+
       if($servico_id and $usuario_id and $quantidade and $data_agendamento and $total){
-      
+
         // filtra os agendamentos naquela data e horário
         $agendamentos  = Agendamento::where('servico_id',$servico_id)
           ->whereDate('data_agendamento',$data_agendamento)
@@ -60,15 +60,17 @@ class AgendamentoController extends Controller
         $newAgendamento->data_agendamento = $data_agendamento;
         $newAgendamento->total = $total;
         $newAgendamento->valor_plataforma = $total * $servico->percentual_plataforma / 100;
+        $code = md5(time().$usuario_id.$servico_id.$data_agendamento.rand(0,9999));
+        $newAgendamento->codigo = $code;
         $newAgendamento->save();
-    
+
         return response()->json($newAgendamento,201);
-    
+
       } else {
-    
-        $array['erro'] = "Valores obrigatórios não informados.";
+
+        $array['erro'] = "Campos obrigatórios não informados.";
         return response()->json($array,400);
-        
+
      }
     }
 }

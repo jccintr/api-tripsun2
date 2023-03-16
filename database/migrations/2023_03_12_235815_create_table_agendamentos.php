@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('quantidade')->default(1);
             $table->decimal('total', 5, 2)->default(0);
             $table->decimal('valor_plataforma', 5, 2)->default(0);
+            $table->boolean('consumido')->default(false);
+            $table->string('codigo');  // md5(iduser+idservico+data+horario+rand())
             $table->timestamps();
             // cria o relacionamento com a tabela users
             $table->foreign('usuario_id')->references('id')->on('users');
