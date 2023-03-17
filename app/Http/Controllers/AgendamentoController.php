@@ -25,9 +25,25 @@ class AgendamentoController extends Controller
       }
       return response()->json($agendamentos,200);
     } else {
-      return response()->json(['erro'=>'Agendamentos não encontradas'],404);
+      return response()->json(['erro'=>'Agendamentos não encontrados.'],404);
     }
 
+  }
+
+  public function index2($usuario_id){
+   
+    
+    $agendamentos = Agendamento::where('usuario_id',$usuario_id)->orderBy('data_agendamento','desc')->get();
+   
+    if (count($agendamentos)>0){
+        foreach ($agendamentos as $agendamento){
+          $servico = Servico::find($agendamento->servico_id);
+          $agendamento['servico'] = $servico;
+        }
+        return response()->json($agendamentos,200);
+    } else {
+      return response()->json(['erro'=>'Agendamentos não encontrados para este usuário.'],404);
+    }
   }
 
 

@@ -90,3 +90,4 @@ Route::post('usuario/updatepassword/{id}',[UserController::class,'trocaSenhaUsua
 // Agendamento Controller =====================================================
 Route::post('/agendamentos', [AgendamentoController::class, 'store']);
 Route::get('/agendamentos', [AgendamentoController::class, 'index']);
+Route::get('/agendamentos/{idUser}', [AgendamentoController::class, 'index2']);
