@@ -18,6 +18,8 @@ return new class extends Migration
             $table->dropColumn('valor');
             $table->decimal('preco', 5, 2)->default(0);
             $table->integer('vagas')->default(1);
+            $table->string('imagem')->nullable(true);
+            
          });
     }
 
@@ -32,6 +34,7 @@ return new class extends Migration
 
             $table->dropColumn('preco');
             $table->dropColumn('vagas');
+            $table->dropColumn('imagem');
           });
     }
 };

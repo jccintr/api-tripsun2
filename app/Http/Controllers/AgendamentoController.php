@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Agendamento;
 use App\Models\Servico;
 use App\Models\User;
+use App\Models\Prestador;
 
 
 class AgendamentoController extends Controller
@@ -39,6 +40,8 @@ class AgendamentoController extends Controller
         foreach ($agendamentos as $agendamento){
           $servico = Servico::find($agendamento->servico_id);
           $agendamento['servico'] = $servico;
+          $prestador = Prestador::find($servico->prestador_id);
+          $agendamento['telefone_contato'] = $prestador->telefone;
         }
         return response()->json($agendamentos,200);
     } else {
