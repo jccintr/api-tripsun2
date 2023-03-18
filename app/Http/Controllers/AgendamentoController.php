@@ -42,7 +42,7 @@ class AgendamentoController extends Controller
           $agendamento['servico'] = $servico;
           $prestador = Prestador::find($servico->prestador_id);
           $agendamento['prestador'] = $prestador;
-         
+        
         }
         return response()->json($agendamentos,200);
     } else {
