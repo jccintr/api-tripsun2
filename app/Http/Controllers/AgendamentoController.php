@@ -38,6 +38,8 @@ class AgendamentoController extends Controller
 
     if (count($agendamentos)>0){
         foreach ($agendamentos as $agendamento){
+          $user = User::find($agendamento->usuario_id);
+          $agendamento['user'] = $user;
           $servico = Servico::find($agendamento->servico_id);
           $agendamento['servico'] = $servico;
           $prestador = Prestador::find($servico->prestador_id);
