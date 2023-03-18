@@ -41,7 +41,8 @@ class AgendamentoController extends Controller
           $servico = Servico::find($agendamento->servico_id);
           $agendamento['servico'] = $servico;
           $prestador = Prestador::find($servico->prestador_id);
-          $agendamento['telefone_contato'] = $prestador->telefone;
+          $agendamento['prestador'] = $prestador;
+         
         }
         return response()->json($agendamentos,200);
     } else {
