@@ -31,10 +31,10 @@ class AgendamentoController extends Controller
   }
 
   public function index2($usuario_id){
-   
-    
-    $agendamentos = Agendamento::where('usuario_id',$usuario_id)->orderBy('data_agendamento','desc')->get();
-   
+
+
+    $agendamentos = Agendamento::where('usuario_id',$usuario_id)->orderBy('data_agendamento')->get();
+
     if (count($agendamentos)>0){
         foreach ($agendamentos as $agendamento){
           $servico = Servico::find($agendamento->servico_id);
