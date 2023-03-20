@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Favorito;
+use App\Models\Servico;
 
 class FavoritoController extends Controller
 {
@@ -13,7 +14,14 @@ class FavoritoController extends Controller
         $favoritos = Favorito::where('usuario_id',$usuario_id)->get();
     
         if (count($favoritos)>0){
-            return response()->json($favoritos,200);
+            $servicos_favoritos = [];
+            foreach($favoritos as $favorito){
+               $servico = Servico::find($favorito->servico_id);
+               if ($servico){
+                   array_push($servicos_favoritos,$servico);
+                }
+            }
+            return response()->json($servicos_favoritos,200);
         } else {
           return response()->json(['erro'=>'Favoritos não encontrados para este usuário.'],404);
         }
