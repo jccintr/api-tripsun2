@@ -19,55 +19,29 @@ class FavoritoController extends Controller
         }
       }
 
-    public function store(Request $request){
-
-     $usuario_id = $request->usuario_id;
-     $servico_id = $request->servico_id;
-     
-     if ($usuario_id and $servico_id) {
-        $novoFavorito = new Favorito();
-        $novoFavorito->usuario_id = $usuario_id;
-        $novoFavorito->servico_id = $servico_id;
-        $novoFavorito->save();
-        return response()->json($novoFavorito,201);
-     } else {
-        return response()->json(['erro'=>'Campos não obrigatórios não informados.'],400);
-     }
     
 
-    }
+    public function store(Request $request){
 
-}
-/*
-public function toggleFavorite(Request $request) {
-    $array = ['error'=>''];
-
-    $id_barber = $request->input('barber');
-
-    $barber = Barber::find($id_barber);
-
-    if($barber) {
-        $fav = UserFavorite::select()
-            ->where('id_user', $this->loggedUser->id)
-            ->where('id_barber', $id_barber)
-        ->first();
-
-        if($fav) {
-            // remover
-            $fav->delete();
-            $array['have'] = false;
+        $usuario_id = $request->usuario_id;
+        $servico_id = $request->servico_id;
+      
+        if ($usuario_id and $servico_id) {
+            $favorito  = Favorito::where('servico_id',$servico_id)->where('usuario_id',$usuario_id)->first();
+            if ($favorito){
+                $favorito->delete();
+                return response()->json(['msg'=>'Favorito removido com sucesso.'],200);
+            } else {
+                $novoFavorito = new Favorito();
+                $novoFavorito->usuario_id = $usuario_id;
+                $novoFavorito->servico_id = $servico_id;
+                $novoFavorito->save();
+                return response()->json(['msg'=>'Favorito incluido com sucesso.'],200);
+            }
+           
         } else {
-            // adicionar
-            $newFav = new UserFavorite();
-            $newFav->id_user = $this->loggedUser->id;
-            $newFav->id_barber = $id_barber;
-            $newFav->save();
-            $array['have'] = true;
+        return response()->json(['erro'=>'Campos não obrigatórios não informados.'],400);
         }
-    } else {
-        $array['error'] = 'Barbeiro inexistente';
     }
-
-    return $array;
 }
-*/
+

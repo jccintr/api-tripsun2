@@ -94,3 +94,4 @@ Route::get('/agendamentos', [AgendamentoController::class, 'index']);
 Route::get('/agendamentos/{idUser}', [AgendamentoController::class, 'index2']);
 // favoritos controller
 Route::post('/favoritos', [FavoritoController::class, 'store']);
+Route::get('/favoritos/{idUser}', [FavoritoController::class, 'index']);
