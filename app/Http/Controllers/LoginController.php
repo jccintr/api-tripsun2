@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Favorito;
 
 class LoginController extends Controller
 {
@@ -67,11 +68,13 @@ public function signIn(Request $request){
         $array['erro'] = "Nome de usuário e ou senha inválidos";
         return response()->json($array,400);
     }
-
+ 
     $token =  md5(time().rand(0,9999).time());
     $user->token = $token;
     $user->save();
-
+    $favoritos  = Favorito::where('usuario_id',$user->id)->get();
+    $user['favoritos'] = $favoritos;
+    
     return response()->json($user,200);
 }
 

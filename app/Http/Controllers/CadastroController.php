@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Favorito;
 
 class CadastroController extends Controller
 {
@@ -34,6 +35,8 @@ public function signUp(Request $request) {
         $newUser->role =  'cliente';
         $newUser->token = $token;
         $newUser->save();
+        $favoritos  = Favorito::where('usuario_id',$user->id)->get();
+        $user['favoritos'] = $favoritos;
         if($newUser){
             return response()->json($newUser,201);
         }

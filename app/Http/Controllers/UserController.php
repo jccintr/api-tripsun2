@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Favorito;
 
 class UserController extends Controller
 {
@@ -34,6 +35,8 @@ class UserController extends Controller
       $user = User::where('token',$token)->first();
 
       if($user){
+          $favoritos  = Favorito::where('usuario_id',$user->id)->get();
+          $user['favoritos'] = $favoritos;
           return response()->json($user,200);
       } else {
         return response()->json(['erro'=>'Usuário não encontrado'],404);
@@ -48,8 +51,11 @@ public function getById($id){
   $usuario = User::find($id);
 
  if ($usuario === null){
+  
     return response()->json(['erro'=>'Usuario não encontrado'],404);
  } else {
+    $favoritos  = Favorito::where('usuario_id',$usuario->id)->get();
+    $usuario['favoritos'] = $favoritos;
     return response()->json($usuario,200);
  }
 
