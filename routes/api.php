@@ -16,6 +16,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AgendamentoController;
+use App\Http\Controllers\FavoritoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,3 +92,5 @@ Route::post('usuario/updatepassword/{id}',[UserController::class,'trocaSenhaUsua
 Route::post('/agendamentos', [AgendamentoController::class, 'store']);
 Route::get('/agendamentos', [AgendamentoController::class, 'index']);
 Route::get('/agendamentos/{idUser}', [AgendamentoController::class, 'index2']);
+// favoritos controller
+Route::post('/favoritos', [FavoritoController::class, 'store']);
