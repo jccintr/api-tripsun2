@@ -35,8 +35,8 @@ public function signUp(Request $request) {
         $newUser->role =  'cliente';
         $newUser->token = $token;
         $newUser->save();
-        $favoritos  = Favorito::where('usuario_id',$user->id)->get();
-        $user['favoritos'] = $favoritos;
+        $servicos_favoritos = [];
+        $user['favoritos'] = $servicos_favoritos;
         if($newUser){
             return response()->json($newUser,201);
         }

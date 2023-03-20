@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Favorito;
+use App\Models\Servico;
 
 class UserController extends Controller
 {
@@ -35,8 +36,17 @@ class UserController extends Controller
       $user = User::where('token',$token)->first();
 
       if($user){
+          
           $favoritos  = Favorito::where('usuario_id',$user->id)->get();
-          $user['favoritos'] = $favoritos;
+          $servicos_favoritos = [];
+          foreach($favoritos as $favorito){
+             $servico = Servico::find($favorito->servico_id);
+             if ($servico){
+                array_push($servicos_favoritos,$servico);
+              }
+          }
+         $user['favoritos'] = $servicos_favoritos;
+
           return response()->json($user,200);
       } else {
         return response()->json(['erro'=>'Usuário não encontrado'],404);
@@ -48,15 +58,26 @@ class UserController extends Controller
 //===========================================================
 public function getById($id){
 
-  $usuario = User::find($id);
+  $user = User::find($id);
 
- if ($usuario === null){
+ if ($user === null){
   
     return response()->json(['erro'=>'Usuario não encontrado'],404);
  } else {
-    $favoritos  = Favorito::where('usuario_id',$usuario->id)->get();
-    $usuario['favoritos'] = $favoritos;
-    return response()->json($usuario,200);
+   
+
+    $favoritos  = Favorito::where('usuario_id',$user->id)->get();
+    $servicos_favoritos = [];
+    foreach($favoritos as $favorito){
+       $servico = Servico::find($favorito->servico_id);
+       if ($servico){
+          array_push($servicos_favoritos,$servico);
+        }
+    }
+   $user['favoritos'] = $servicos_favoritos;
+
+
+    return response()->json($user,200);
  }
 
 }

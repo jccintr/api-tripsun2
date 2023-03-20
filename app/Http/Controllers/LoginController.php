@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Favorito;
+use App\Models\Servico;
 
 class LoginController extends Controller
 {
@@ -73,8 +74,15 @@ public function signIn(Request $request){
     $user->token = $token;
     $user->save();
     $favoritos  = Favorito::where('usuario_id',$user->id)->get();
-    $user['favoritos'] = $favoritos;
-    
+    $servicos_favoritos = [];
+    foreach($favoritos as $favorito){
+        $servico = Servico::find($favorito->servico_id);
+        if ($servico){
+            array_push($servicos_favoritos,$servico);
+        }
+    }
+    $user['favoritos'] = $servicos_favoritos;
+
     return response()->json($user,200);
 }
 
