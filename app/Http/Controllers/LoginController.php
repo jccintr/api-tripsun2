@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Favorito;
 use App\Models\Servico;
+use App\Models\Cidade;
+use App\Models\Subcategoria;
+use App\Models\Imagens;
+use App\Models\Prestador;
 
 class LoginController extends Controller
 {
@@ -78,6 +82,14 @@ public function signIn(Request $request){
     foreach($favoritos as $favorito){
         $servico = Servico::find($favorito->servico_id);
         if ($servico){
+            $servico['imagens'] = Imagens::where('servico_id',$servico['id'])->get();
+            $prestador = Prestador::find($servico->prestador_id);
+            $servico['prestador'] = $prestador;
+            $cidade = Cidade::find($servico->cidade_id);
+            $servico['cidade'] = $cidade->nome;
+            $servico['estado'] = $cidade->estado;
+            $subcategoria = Subcategoria::find($servico->subcategoria_id);
+            $servico['imagem'] = $subcategoria->imagem;
             array_push($servicos_favoritos,$servico);
         }
     }

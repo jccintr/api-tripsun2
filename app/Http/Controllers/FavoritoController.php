@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Favorito;
 use App\Models\Servico;
+use App\Models\Cidade;
+use App\Models\Subcategoria;
 
 class FavoritoController extends Controller
 {
@@ -18,6 +20,11 @@ class FavoritoController extends Controller
             foreach($favoritos as $favorito){
                $servico = Servico::find($favorito->servico_id);
                if ($servico){
+                   $cidade = Cidade::find($servico->cidade_id);
+                   $servico['cidade'] = $cidade->nome;
+                   $servico['estado'] = $cidade->estado;
+                    $subcategoria = Subcategoria::find($servico->subcategoria_id);
+                   $servico['imagem'] = $subcategoria->imagem;
                    array_push($servicos_favoritos,$servico);
                 }
             }
