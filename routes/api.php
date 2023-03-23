@@ -65,7 +65,8 @@ Route::get('/servicos', [ServicoController::class, 'list']);
 Route::post('/servicos', [ServicoController::class, 'add']); // restrita admin
 Route::get('/servico/{id}', [ServicoController::class, 'getById']);
 Route::post('/servico/{id}/update', [ServicoController::class, 'update']); // restrita admin
-Route::post('/seed', [ServicoController::class, 'seed']);
+Route::post('/servico/icone/{id}', [ServicoController::class, 'icone']);
+//Route::post('/seed', [ServicoController::class, 'seed']);
 Route::post('/geo', [ServicoController::class, 'getCityByCoords']);
 // Imagens Controller =====================================================
 Route::post('/imagens', [ImagensController::class, 'add']); // restrita admin

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 use App\Models\Servico;
@@ -142,6 +143,25 @@ class ServicoController extends Controller
        $array['erro'] = "Campos obrigatórios não informados.";
        return response()->json($array,400);
     }
+  }
+
+  public function icone($id,Request $request){
+
+    $icone = $request->file('icone');
+    $servico = Servico::find($id);
+
+    if (!$servico) {
+        return response()->json(['erro'=>'Serviço não encontrado.'],404);
+    }
+
+    if ($servico->imagem) {
+        Storage::disk('public')->delete($servico->imagem);
+    }
+    $icone_url = $icone->store('imagens/servicos','public');
+    $servico->imagem = $icone_url;
+    $servico->save();
+    return response()->json($servico,200);
+
   }
 
 
