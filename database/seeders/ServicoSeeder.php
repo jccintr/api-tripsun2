@@ -67,7 +67,8 @@ class ServicoSeeder extends Seeder
             'percentual_plataforma' => 2,
             'preco' => rand(20,150).'.00',
             'vagas' => rand(1,10),
-            'stars' => rand(3, 4).'.'.rand(0, 9)
+            'stars' => rand(3, 4).'.'.rand(0, 9),
+            'imagem' => 'imagens/icones_servicos/icone-servico-'.rand(1,30).'.png'
         ]);
         // horarios desta atividade
         DB::table('horarios')->insert([

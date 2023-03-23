@@ -52,8 +52,8 @@ class UserController extends Controller
             $servico['prestador'] = $prestador;
                    $servico['cidade'] = $cidade->nome;
                    $servico['estado'] = $cidade->estado;
-                  $subcategoria = Subcategoria::find($servico->subcategoria_id);
-                  $servico['imagem'] = $subcategoria->imagem;
+                  //$subcategoria = Subcategoria::find($servico->subcategoria_id);
+                 // $servico['imagem'] = $subcategoria->imagem;
                 array_push($servicos_favoritos,$servico);
               }
           }

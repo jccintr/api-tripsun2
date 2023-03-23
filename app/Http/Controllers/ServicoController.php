@@ -157,7 +157,7 @@ class ServicoController extends Controller
     if ($servico->imagem) {
         Storage::disk('public')->delete($servico->imagem);
     }
-    $icone_url = $icone->store('imagens/servicos','public');
+    $icone_url = $icone->store('imagens/icones_servicos','public');
     $servico->imagem = $icone_url;
     $servico->save();
     return response()->json($servico,200);

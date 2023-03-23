@@ -88,8 +88,8 @@ public function signIn(Request $request){
             $cidade = Cidade::find($servico->cidade_id);
             $servico['cidade'] = $cidade->nome;
             $servico['estado'] = $cidade->estado;
-            $subcategoria = Subcategoria::find($servico->subcategoria_id);
-            $servico['imagem'] = $subcategoria->imagem;
+            //$subcategoria = Subcategoria::find($servico->subcategoria_id);
+            //$servico['imagem'] = $subcategoria->imagem;
             array_push($servicos_favoritos,$servico);
         }
     }
