@@ -120,10 +120,8 @@ public function getById($id){
   //===========================================================
     public function trocaSenhaUsuario($id,Request $request){
 
-
       $senha = $request->senha;
-      $telefone = $request->telefone;
-
+      
       if($senha) {
           $usuario = User::find($id);
           $password_hash = password_hash($senha, PASSWORD_DEFAULT);

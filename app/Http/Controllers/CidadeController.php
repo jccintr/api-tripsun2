@@ -67,12 +67,10 @@ class CidadeController extends Controller
 
           $cidade['categorias'] = [];
           $cidade['subcategorias'] = [];
-
           $subcat = [];
           $cat = [];
           // pega os serviços da cidade
           $cidade['servicos'] = Servico::where('cidade_id',$request->id)->with('prestador')->get();
-
           // pega as categorias e subcategorias da cidade
           foreach($cidade['servicos'] as  $servico) {
 
@@ -90,8 +88,7 @@ class CidadeController extends Controller
           $servicoLongitude = (float)$servico['longitude'];
           //pega as imagens do serviço
           $servico['imagens'] = Imagens::where('servico_id',$servico['id'])->get();
-
-          $servico['imagem'] = $findSubcat['imagem'];
+          //$servico['imagem'] = $findSubcat['imagem'];
           $servico['marcador'] = $findSubcat['marcador'];
           $servico['distancia'] =  round(sqrt(pow(69.1 * ($servicoLatitude - $lat), 2) + pow(69.1 * ($lng - $servicoLongitude) * cos($servicoLatitude / 57.3), 2)),1);
           $servico['valor'] = $servico['preco'];
