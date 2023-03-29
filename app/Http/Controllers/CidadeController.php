@@ -9,6 +9,7 @@ use App\Models\Subcategoria;
 use App\Models\Prestador;
 use App\Models\Servico;
 use App\Models\Imagens;
+use App\Models\Review;
 use Illuminate\Support\Facades\Storage;
 
 class CidadeController extends Controller
@@ -57,7 +58,7 @@ class CidadeController extends Controller
 //===========================================================
       public function get(Request $request)
      {
-        $cidade = $this->cidades->find($request->id);
+        $cidade = Cidade::find($request->id);
         $lat = (float)$request->lat;
         $lng = (float)$request->lng;
         if ($cidade === null){
@@ -74,10 +75,19 @@ class CidadeController extends Controller
           // pega as categorias e subcategorias da cidade
           foreach($cidade['servicos'] as  $servico) {
 
-                $findCat = $this->categorias->find($servico['categoria_id']);
+                $findCat = Categoria::find($servico['categoria_id']);
                 $servico['categoria'] = $findCat['nome'];
-                $findSubcat = $this->subcategorias->find($servico['subcategoria_id']);
+                $findSubcat = Subcategoria::find($servico['subcategoria_id']);
                 $servico['subcategoria'] = $findSubcat['nome'];
+                //pega os reviews deste serviço
+                $reviews = Review::where('servico_id',$servico->id)->get();
+                if (count($reviews)>0){
+                    $servico['stars'] = round($reviews->avg('rate'),1);
+                } else {
+                    $servico['stars'] = 0;
+                }    
+                
+                
                 if (!in_array($findCat, $cat)) {
                     array_push($cat,$findCat);
                  }
