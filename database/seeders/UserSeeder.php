@@ -46,7 +46,8 @@ class UserSeeder extends Seeder
             'numero' => '120',
             'bairro' => 'Centro',
             'cidade' => 'Taubaté',
-            'estado' => 'SP'
+            'estado' => 'SP',
+            'customer_id' => 'cus_000005225860'
         ]);
 
         DB::table('users')->insert([
@@ -62,7 +63,8 @@ class UserSeeder extends Seeder
             'numero' => '46',
             'bairro' => 'Tijuco Preto',
             'cidade' => 'Brazópolis',
-            'estado' => 'MG'
+            'estado' => 'MG',
+            'customer_id' => 'cus_000005223920'
         ]);
 
        
