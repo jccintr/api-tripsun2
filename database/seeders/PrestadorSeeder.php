@@ -27,7 +27,8 @@ class PrestadorSeeder extends Seeder
             'telefone' => "35-3641-1100",
             'email' => "joao@gmail.com",
             'cnpj' => "11.491.322/0001-22",
-            'ie' => "123.456.789"
+            'ie' => "123.456.789",
+            'password' => password_hash('123', PASSWORD_DEFAULT)
         ]);
         DB::table('prestadores')->insert([
             'nome' => "Service Provider 2",
@@ -41,7 +42,8 @@ class PrestadorSeeder extends Seeder
             'telefone' => "35-3641-1200",
             'email' => "paulo@gmail.com",
             'cnpj' => "11.326.322/0001-22",
-            'ie' => "123.545.789"
+            'ie' => "123.545.789",
+            'password' => password_hash('123', PASSWORD_DEFAULT)
         ]);
         DB::table('prestadores')->insert([
             'nome' => "Service Provider 3",
@@ -55,7 +57,8 @@ class PrestadorSeeder extends Seeder
             'telefone' => "13-3641-1200",
             'email' => "carlos@gmail.com",
             'cnpj' => "11.000.322/0001-22",
-            'ie' => "222.545.789"
+            'ie' => "222.545.789",
+            'password' => password_hash('123', PASSWORD_DEFAULT)
         ]);
         DB::table('prestadores')->insert([
             'nome' => "Service Provider 4",
@@ -69,7 +72,8 @@ class PrestadorSeeder extends Seeder
             'telefone' => "13-45236-1200",
             'email' => "marco@gmail.com",
             'cnpj' => "11.9865.651/0001-22",
-            'ie' => "222.545.321"
+            'ie' => "222.545.321",
+            'password' => password_hash('123', PASSWORD_DEFAULT)
         ]);
     }
 }
