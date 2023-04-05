@@ -17,6 +17,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\FavoritoController;
+use App\Http\Controllers\CobrancaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,3 +97,5 @@ Route::get('/agendamentos/{idUser}', [AgendamentoController::class, 'index2']);
 // favoritos controller
 Route::post('/favoritos', [FavoritoController::class, 'store']);
 Route::get('/favoritos/{idUser}', [FavoritoController::class, 'index']);
+// cobrancas controller
+Route::post('/cobrancas', [CobrancaController::class, 'store']);

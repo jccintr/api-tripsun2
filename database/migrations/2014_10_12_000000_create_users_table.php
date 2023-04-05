@@ -23,7 +23,16 @@ return new class extends Migration
             $table->string('role')->nullable(); // admin - cliente - prestador
             $table->string('token')->nullable();
             $table->timestamp('token_expire_at')->nullable();
-
+            //campos usados para criar cobranças
+            $table->string('customer_id')->nullable();
+            $table->string('documento')->nullable();
+            $table->string('cep')->nullable();
+            $table->string('logradouro')->nullable();
+            $table->string('numero')->nullable();
+            $table->string('bairro')->nullable();
+            $table->string('cidade')->nullable();
+            $table->string('estado')->nullable();
+            
             $table->rememberToken();
             $table->timestamps();
         });

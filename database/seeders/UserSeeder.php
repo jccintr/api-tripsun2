@@ -38,8 +38,15 @@ class UserSeeder extends Seeder
             'email' => "joaquim@gmail.com",
             'password' => password_hash('123', PASSWORD_DEFAULT),
             'token' => md5(time().rand(0,9999).time()),
-            'telefone' => "35-99912-2008",
-            'role' => 'cliente'
+            'telefone' => "12-99912-2008",
+            'role' => 'cliente',
+            'documento' => '02761110609',
+            'cep' => '12010040',
+            'logradouro' => 'Praça Campos Sales',
+            'numero' => '120',
+            'bairro' => 'Centro',
+            'cidade' => 'Taubaté',
+            'estado' => 'SP'
         ]);
 
         DB::table('users')->insert([
@@ -48,7 +55,14 @@ class UserSeeder extends Seeder
             'password' => password_hash('123', PASSWORD_DEFAULT),
             'token' => md5(time().rand(0,9999).time()),
             'telefone' => "35-99912-2008",
-            'role' => 'cliente'
+            'role' => 'cliente',
+            'documento' => '02761110609',
+            'cep' => '37530000',
+            'logradouro' => 'Rua 24 de Maio',
+            'numero' => '46',
+            'bairro' => 'Tijuco Preto',
+            'cidade' => 'Brazópolis',
+            'estado' => 'MG'
         ]);
 
        

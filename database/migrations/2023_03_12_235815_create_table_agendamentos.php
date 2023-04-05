@@ -23,6 +23,9 @@ return new class extends Migration
             $table->decimal('valor_plataforma', 5, 2)->default(0);
             $table->boolean('consumido')->default(false);
             $table->string('codigo');  // md5(iduser+idservico+data+horario+rand())
+            $table->string('cobranca_id')->nullable();
+            $table->string('cobranca_status')->nullable();
+            $table->string('cobranca_url')->nullable();
             $table->timestamps();
             // cria o relacionamento com a tabela users
             $table->foreign('usuario_id')->references('id')->on('users');
