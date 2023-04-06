@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'token' => md5(time().rand(0,9999).time()),
             'telefone' => "35-99912-2008",
             'role' => 'admin'
-        ]);
+        ]);  // id 1
 
         DB::table('users')->insert([
             'name' => "Prestador genérico",
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
             'token' => md5(time().rand(0,9999).time()),
             'telefone' => "35-99912-2008",
             'role' => 'prestador'
-        ]);
+        ]);  // id 2
 
         DB::table('users')->insert([
             'name' => "Joaquim Teixeira",
@@ -48,7 +48,7 @@ class UserSeeder extends Seeder
             'cidade' => 'Taubaté',
             'estado' => 'SP',
             'customer_id' => 'cus_000005225860'
-        ]);
+        ]); // id 3
 
         DB::table('users')->insert([
             'name' => "Elisa Santos",
@@ -65,7 +65,7 @@ class UserSeeder extends Seeder
             'cidade' => 'Brazópolis',
             'estado' => 'MG',
             'customer_id' => 'cus_000005223920'
-        ]);
+        ]);  // id 4
 
        
 
@@ -76,6 +76,6 @@ class UserSeeder extends Seeder
             'token' => md5(time().rand(0,9999).time()),
             'telefone' => "35-99912-2008",
             'role' => 'admin'
-        ]);
+        ]);  // id 5
     }
 }

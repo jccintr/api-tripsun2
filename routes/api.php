@@ -98,4 +98,4 @@ Route::get('/agendamentos/{idUser}', [AgendamentoController::class, 'index2']);
 Route::post('/favoritos', [FavoritoController::class, 'store']);
 Route::get('/favoritos/{idUser}', [FavoritoController::class, 'index']);
 // cobrancas controller
-Route::post('/cobrancas', [CobrancaController::class, 'store']);
+Route::post('/cobrancas', [CobrancaController::class, 'status']);
