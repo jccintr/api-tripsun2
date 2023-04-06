@@ -31,11 +31,16 @@ class CobrancaController extends Controller
       $cobranca_id = $request->payment['id'];
      
       $agendamento = Agendamento::where('cobranca_id',$cobranca_id)->first();
-      $agendamento->cobranca_status = $status;
-      $agendamento->save();
-      return response()->json($agendamento,200);
+      if ($agendamento){
+        $agendamento->cobranca_status = $status;
+        $agendamento->save();
+        return response()->json($agendamento,200);
+      } else {
+        $array['status'] = "Agendamento não encontrado.";
+        return response()->json($agendamento,200);
+      }
+     
       
-      //return response()->json($cobranca_id,200);
     }
 
 }
