@@ -123,7 +123,7 @@ class AgendamentoController extends Controller
           'access_token' => env("ASAAS_TOKEN")
           ])->post('https://sandbox.asaas.com/api/v3/payments',[
                 'customer' => $cliente->customer_id,
-                'billingType'=> 'UNDEFINED',
+                'billingType'=> 'PIX',   //  'UNDEFINED',
                 'dueDate'=> substr($data_agendamento,0,10),
                 'value'=> $total,
                 'description'=> 'Agendamento Tripsun Atividade Id: '.$servico_id
