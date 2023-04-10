@@ -92,6 +92,7 @@ Route::post('usuario/update/{id}',[UserController::class,'updateUsuario']);
 Route::post('usuario/updatepassword/{id}',[UserController::class,'trocaSenhaUsuario']);
 // Agendamento Controller =====================================================
 Route::post('/agendamentos', [AgendamentoController::class, 'store']);
+Route::post('/agendamentos/availibility', [AgendamentoController::class, 'checkAvailibility']);
 Route::get('/agendamentos', [AgendamentoController::class, 'index']);
 Route::get('/agendamentos/{idUser}', [AgendamentoController::class, 'index2']);
 // favoritos controller
