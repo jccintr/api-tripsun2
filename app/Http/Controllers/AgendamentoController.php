@@ -170,10 +170,22 @@ class AgendamentoController extends Controller
                 'description'=> 'Agendamento Tripsun Atividade Id: '.$servico_id
         ]);
       */
+      // cobranca tipo PIX
+      $response = Http::withHeaders([
+        'Content-Type' => 'application/json',
+        'access_token' => env("ASAAS_TOKEN")
+        ])->post('https://sandbox.asaas.com/api/v3/payments',[
+              'customer' => $cliente->customer_id,
+              'billingType'=> 'PIX',
+              'dueDate'=> substr($data_agendamento,0,10),
+              'value'=> $total,
+              'description'=> 'Agendamento Tripsun Atividade Id: '.$servico_id
+      ]);
       // cobranca tipo cartao de credito
       // dados do cartao
+      /*
       $creditCardholderName = $cliente->name;
-      $creditCardNumber = '5162306219378829';
+      $creditCardNumber = '5162306219378829';  // para dar erro 5184019740373151
       $creditCardExpiryMonth = '12';
       $creditCardExpiryYear = '2025';
       $creditCardCVV = '318';
@@ -209,7 +221,7 @@ class AgendamentoController extends Controller
                 'phone' => $creditCardHolderPhone,
                ],
       ]);
-
+     */
       if ($response->status()!==200){
         $array['erro'] = "Falha ao criar cobrança.";
         return response()->json($response->json(),400);
@@ -245,3 +257,51 @@ class AgendamentoController extends Controller
      }
     }
 }
+
+
+/*  retorno resposta cob cartao credito
+{
+ "object": "payment",
+ "id": "pay_3718164637772281",
+ "dateCreated": "2023-04-10",
+ "customer": "cus_000005225860",
+ "paymentLink": null,
+ "value": 134,
+ "netValue": 130.85,
+ "originalValue": null,
+ "interestValue": null,
+ "description": "Agendamento Tripsun Atividade Id: 18",
+ "billingType": "CREDIT_CARD",
+ "confirmedDate": "2023-04-10",
+ "creditCard": {
+  "creditCardNumber": "********",
+  "creditCardBrand": "MASTERCARD",
+  "creditCardToken": "********"
+ },
+ "pixTransaction": null,
+ "status": "CONFIRMED",
+ "dueDate": "2023-04-13",
+ "originalDueDate": "2023-04-13",
+ "paymentDate": null,
+ "clientPaymentDate": "2023-04-10",
+ "installmentNumber": null,
+ "invoiceUrl": "https://sandbox.asaas.com/i/3718164637772281",
+ "invoiceNumber": "02101954",
+ "externalReference": null,
+ "deleted": false,
+ "anticipated": false,
+ "anticipable": false,
+ "creditDate": "2023-05-12",
+ "estimatedCreditDate": "2023-05-12",
+ "transactionReceiptUrl": "https://sandbox.asaas.com/comprovantes/8823605264264197",
+ "nossoNumero": null,
+ "bankSlipUrl": null,
+ "lastInvoiceViewedDate": null,
+ "lastBankSlipViewedDate": null,
+ "postalService": false,
+ "refunds": null
+}
+
+
+
+*/
