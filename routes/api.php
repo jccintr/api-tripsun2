@@ -90,6 +90,7 @@ Route::get('/user/{token}',[UserController::class,'getUser']);
 Route::get('/usuario/{id}',[UserController::class,'getById']);
 Route::post('usuario/update/{id}',[UserController::class,'updateUsuario']);
 Route::post('usuario/updatepassword/{id}',[UserController::class,'trocaSenhaUsuario']);
+Route::post('usuario/pushtoken/{id}',[UserController::class,'savePushtoken']);
 // Agendamento Controller =====================================================
 Route::post('/agendamentos', [AgendamentoController::class, 'store']);
 Route::post('/agendamentos/availibility', [AgendamentoController::class, 'checkAvailibility']);

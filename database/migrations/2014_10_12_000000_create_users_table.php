@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('bairro')->nullable();
             $table->string('cidade')->nullable();
             $table->string('estado')->nullable();
-            
+            $table->string('push_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

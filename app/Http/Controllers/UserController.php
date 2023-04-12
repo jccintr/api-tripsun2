@@ -137,5 +137,20 @@ public function getById($id){
 
     }
 
+    public function savePushtoken($id, Request $request) {
+
+      $user = User::find($id);
+      $token = $request->push_token;
+      if ($user and $token) {
+         $user->push_token = $token;
+         $user->save();
+         $array['sucesso'] = "Push Token salvo com sucesso.";
+         return response()->json($array,200);
+      } else {
+        $array['erro'] = "Campos obrigatórios não informados.";
+        return response()->json($array,400);
+      }
+    }
+
 
 }
