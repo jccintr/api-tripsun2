@@ -100,6 +100,11 @@ class AgendamentoController extends Controller
       $usuario_id = intval($request->usuario_id);
       $quantidade = intval($request->quantidade);
       $data_agendamento = $request->data_agendamento;
+      $numero_cartao = $request->numero_cartao;
+      $validade_cartao = $request->validade_cartao;
+      $titular_cartao = $request->titular_cartao;
+      $cvv_cartao = $request->cvv_cartao;
+
       $total = $request->total;
 
       if($servico_id and $usuario_id and $quantidade and $data_agendamento and $total){
@@ -171,6 +176,7 @@ class AgendamentoController extends Controller
         ]);
       */
       // cobranca tipo PIX
+      /*
       $response = Http::withHeaders([
         'Content-Type' => 'application/json',
         'access_token' => env("ASAAS_TOKEN")
@@ -181,16 +187,17 @@ class AgendamentoController extends Controller
               'value'=> $total,
               'description'=> 'Agendamento Tripsun Atividade Id: '.$servico_id
       ]);
+      */
       // cobranca tipo cartao de credito
       // dados do cartao
-      /*
-      $creditCardholderName = $cliente->name;
-      $creditCardNumber = '5162306219378829';  // para dar erro 5184019740373151
-      $creditCardExpiryMonth = '12';
-      $creditCardExpiryYear = '2025';
-      $creditCardCVV = '318';
+      $arrValidade = explode("/",$validade_cartao);
+      $creditCardholderName = $titular_cartao; // $cliente->name;
+      $creditCardNumber = $numero_cartao; //'5162306219378829';  // para dar erro 5184019740373151
+      $creditCardExpiryMonth = $arrValidade[0];// '12';
+      $creditCardExpiryYear = $arrValidade[1]; // '2025';
+      $creditCardCVV = $cvv_cartao; //'318';
       // dados do titular do cartao
-      $creditCardholderName = $cliente->name;
+      $creditCardholderName = $titular_cartao;
       $creditCardHolderEmail  = $cliente->email;
       $creditCardHolderDocumento  = $cliente->documento;
       $creditCardHolderCep  = $cliente->cep;
@@ -221,7 +228,7 @@ class AgendamentoController extends Controller
                 'phone' => $creditCardHolderPhone,
                ],
       ]);
-     */
+     
       if ($response->status()!==200){
         $array['erro'] = "Falha ao criar cobrança.";
         return response()->json($response->json(),400);
