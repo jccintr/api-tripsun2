@@ -36,8 +36,8 @@ class CobrancaController extends Controller
         $agendamento->cobranca_status = $status;
         $agendamento->save();
 
-        if($status=='RECEIVED' or $status == 'CONFIRMED' or $status='PAYMENT_CONFIRMED') {
-
+        if( $status=='RECEIVED' or $status == 'CONFIRMED' or $status=='PAYMENT_CONFIRMED') {
+          // envia a notificação de pagamento recebido para o usuario
           $user = User::find($agendamento->usuario_id);
           $response = Http::withHeaders([
              'Content-Type' => 'application/json'
