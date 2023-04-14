@@ -107,7 +107,7 @@ class AgendamentoController extends Controller
 
       $total = $request->total;
 
-      if($servico_id and $usuario_id and $quantidade and $data_agendamento and $total){
+      if($servico_id and $usuario_id and $quantidade and $data_agendamento and $total and $numero_cartao and $validade_cartao and $titular_cartao and $cvv_cartao){
 
         // filtra os agendamentos naquela data e horário
         $agendamentos  = Agendamento::where('servico_id',$servico_id)

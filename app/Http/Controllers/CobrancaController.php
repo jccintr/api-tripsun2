@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Agendamento;
+use App\Models\User;
 
 class CobrancaController extends Controller
 {
@@ -29,18 +30,32 @@ class CobrancaController extends Controller
 
       $status = $request->event;
       $cobranca_id = $request->payment['id'];
-     
+
       $agendamento = Agendamento::where('cobranca_id',$cobranca_id)->first();
       if ($agendamento){
         $agendamento->cobranca_status = $status;
         $agendamento->save();
+
+        if($status=='RECEIVED' or $status == 'CONFIRMED') {
+
+          $user = User::find($agendamento->usuario_id);
+          $response = Http::withHeaders([
+             'Content-Type' => 'application/json'
+             ])->post('https://exp.host/--/api/v2/push/send',[
+                   'to' => $user->push_token,
+                   'sound'=> 'default',
+                   'title'=> 'TripSun',
+                   'body'=> 'Recebemos o seu pagamento ! Obrigado.'
+             ]);
+       }
+
         return response()->json($agendamento,200);
       } else {
         $array['status'] = "Agendamento não encontrado.";
         return response()->json($agendamento,200);
       }
-     
-      
+
+
     }
 
 }
