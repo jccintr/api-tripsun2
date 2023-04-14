@@ -36,7 +36,7 @@ class AgendamentoController extends Controller
 
 
     $agendamentos = Agendamento::where('usuario_id',$usuario_id)->orderBy('data_agendamento')->get();
-    
+
     if (count($agendamentos)>0){
         foreach ($agendamentos as $agendamento){
           $user = User::find($agendamento->usuario_id);
@@ -45,7 +45,7 @@ class AgendamentoController extends Controller
           $agendamento['servico'] = $servico;
           $prestador = Prestador::find($servico->prestador_id);
           $agendamento['prestador'] = $prestador;
-        
+
         }
         return response()->json($agendamentos,200);
     } else {
@@ -132,7 +132,7 @@ class AgendamentoController extends Controller
        // Então pode gerar a cobrança e enviar ao usuario
        // recuperar os dados do clientes
        $cliente = User::find($usuario_id);
-      
+
 
        // se customer_id === null fazer o cadastro do usuario e salvar o customer_id no usuario
        if($cliente->customer_id===null){
@@ -192,7 +192,7 @@ class AgendamentoController extends Controller
       // dados do cartao
       $arrValidade = explode("/",$validade_cartao);
       $creditCardholderName = $titular_cartao; // $cliente->name;
-      $creditCardNumber = $numero_cartao; //'5162306219378829';  // para dar erro 5184019740373151
+      $creditCardNumber = $numero_cartao; //'5162 3062 1937 8829';  // para dar erro 5184019740373151
       $creditCardExpiryMonth = $arrValidade[0];// '12';
       $creditCardExpiryYear = $arrValidade[1]; // '2025';
       $creditCardCVV = $cvv_cartao; //'318';
@@ -228,16 +228,20 @@ class AgendamentoController extends Controller
                 'phone' => $creditCardHolderPhone,
                ],
       ]);
-     
+
       if ($response->status()!==200){
-        $array['erro'] = "Falha ao criar cobrança.";
-        return response()->json($response->json(),400);
+
+         $retornoCobranca = $response->json();
+      //  dd($retorno['errors'][0]['description']);
+        $array['erro'] = $retornoCobranca['errors'][0]['description'];
+        //  return response()->json($response->json(),400);
+      return response()->json($array,400);
       }
-      
+
 
       $cobranca = $response->json();
       // FINAL ADD COBRANÇA
-     
+
 
        //************************ */
         $newAgendamento = new Agendamento();
