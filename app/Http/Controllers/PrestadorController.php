@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class PrestadorController extends Controller
 {
-  
+
     public function __construct(Prestador $prestadores){
         $this->prestadores = $prestadores;
       }
@@ -43,13 +43,14 @@ class PrestadorController extends Controller
      $cnpj = $request->cnpj;
      $ie = $request->ie;
      $imagem = $request->file('logotipo');
+     $password = $request->password;
 
-      if($imagem && $nome){
+      if($imagem && $nome && $email && $password){
         $imagem_url = $imagem->store('imagens/prestadores','public');
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
         $prestador = $this->prestadores->create([
           'nome' => $nome,
           'cidade_id' => $request->cidade_id,
-          'usuario_id' => $request->usuario_id,
           'logotipo' => $imagem_url,
           'endereco' => $endereco,
           'bairro' => $bairro,
@@ -58,11 +59,12 @@ class PrestadorController extends Controller
           'telefone' => $telefone,
           'email' => $email,
           'cnpj' => $cnpj,
-          'ie' => $ie
+          'ie' => $ie,
+          'password' => $password_hash
         ]);
         return response()->json($prestador,201);
     } else {
-      $array['erro'] = "Requisição mal formatada";
+      $array['erro'] = "Campos obrigatórios não informados.";
       return response()->json($array,400);
     }
   }
@@ -90,7 +92,7 @@ class PrestadorController extends Controller
         $prestador = Prestador::find($id);
         $prestador->nome = $nome;
         $prestador->cidade_id = $request->cidade_id;
-        $prestador->usuario_id = $request->usuario_id;
+      //  $prestador->usuario_id = $request->usuario_id;
         $prestador->endereco = $request->endereco;
         $prestador->bairro = $request->bairro;
         $prestador->cep = $request->cep;

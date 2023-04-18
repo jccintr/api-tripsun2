@@ -18,7 +18,7 @@ class PrestadorSeeder extends Seeder
         DB::table('prestadores')->insert([
             'nome' => "Service Provider 1",
             'cidade_id' => 1,
-            'usuario_id' => 2,
+          //  'usuario_id' => 2,
             'logotipo' =>"imagens/prestadores/prestador1.png",
             'endereco' => "Rua x, 50",
             'bairro' => "Centro",
@@ -33,7 +33,7 @@ class PrestadorSeeder extends Seeder
         DB::table('prestadores')->insert([
             'nome' => "Service Provider 2",
             'cidade_id' => 1,
-            'usuario_id' => 2,
+          //  'usuario_id' => 2,
             'logotipo' =>"imagens/prestadores/prestador2.png",
             'endereco' => "Rua y, 100",
             'bairro' => "Centro",
@@ -48,7 +48,7 @@ class PrestadorSeeder extends Seeder
         DB::table('prestadores')->insert([
             'nome' => "Service Provider 3",
             'cidade_id' => 2,
-            'usuario_id' => 2,
+            //'usuario_id' => 2,
             'logotipo' =>"imagens/prestadores/prestador3.png",
             'endereco' => "Rua da Praia, 50",
             'bairro' => "Centro",
@@ -63,7 +63,7 @@ class PrestadorSeeder extends Seeder
         DB::table('prestadores')->insert([
             'nome' => "Service Provider 4",
             'cidade_id' => 2,
-            'usuario_id' => 2,
+          //  'usuario_id' => 2,
             'logotipo' =>"imagens/prestadores/prestador4.png",
             'endereco' => "Rua da Praia, 85",
             'bairro' => "Centro",
