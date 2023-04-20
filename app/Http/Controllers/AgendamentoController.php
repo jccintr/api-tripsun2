@@ -91,8 +91,126 @@ class AgendamentoController extends Controller
        return response()->json($array,200);
       }
 
+    } 
+
+    public function store2(Request $request){
+
+      $servico_id = intval($request->servico_id);
+      $usuario_id = intval($request->usuario_id);
+      $quantidade = intval($request->quantidade);
+      $data_agendamento = $request->data_agendamento;
+      $total = $request->total;
+      if (!$servico_id or !$usuario_id or !$quantidade or !$data_agendamento or !$total){
+         $array['erro'] = "Campos obrigatórios não informados.";
+         return response()->json($array,400);
+      }
+
+       // filtra os agendamentos naquela data e horário
+       $agendamentos  = Agendamento::where('servico_id',$servico_id)
+       ->whereDate('data_agendamento',$data_agendamento)
+       ->whereTime('data_agendamento',$data_agendamento)->get();
+       // calcular a quantidade de vagas nos agendamentos filtrados
+       $vagas = 0;
+       foreach($agendamentos as $agendamento){
+         $vagas += $agendamento->quantidade;
+       }
+
+       $servico = Servico::find($servico_id);
+
+      // se o total de vagas agendadas + vagas novo agendamento > servico->vagas = recusar agendamento
+      if(($vagas+$quantidade)>$servico->vagas){
+         $array['erro'] = "Vagas insuficientes para esta data e horário.";
+         return response()->json($array,400);
+      }
+
+      // Se chegou até aqui é pq a Data e horario estão disponiveis para agendamento
+       // Então pode gerar a cobrança e enviar ao usuario
+       // recuperar os dados do clientes
+       $cliente = User::find($usuario_id);
+      
+       // se customer_id === null fazer o cadastro do usuario e salvar o customer_id no usuario
+       if($cliente->customer_id===null){
+
+        $response = Http::withHeaders([
+          'Content-Type' => 'application/json',
+          'access_token' => env("ASAAS_TOKEN")
+        ])->post('https://sandbox.asaas.com/api/v3/customers',[
+          'name' => $cliente->name,
+          'email'=> $cliente->email,
+          'mobilePhone'=> $cliente->telefone,
+          'cpfCnpj'=> $cliente->documento,
+          'postalCode'=> $cliente->cep,
+          'address'=> $cliente->logradouro,
+          'addressNumber'=> $cliente->numero,
+          'province'=> $cliente->bairro,
+          'externalReference'=> $cliente->id
+        ]);
+
+        if ($response->status()!==200){
+          $array['erro'] = "Falha ao cadastrar dados do cliente.";
+          return response()->json($array,400);
+        }
+        $newCustomer = $response->json();
+        $cliente->customer_id = $newCustomer['id'];
+        $cliente->save();
+     }
+      // cobranca tipo PIX
+      
+      $response = Http::withHeaders([
+        'Content-Type' => 'application/json',
+        'access_token' => env("ASAAS_TOKEN")
+        ])->post('https://sandbox.asaas.com/api/v3/payments',[
+              'customer' => $cliente->customer_id,
+              'billingType'=> 'PIX',
+              'dueDate'=> substr($data_agendamento,0,10),
+              'value'=> $total,
+              'description'=> 'Agendamento Tripsun Atividade Id: '.$servico_id
+      ]);
+      
+      if ($response->status()!==200){
+
+        $retornoCobranca = $response->json();
+        $array['erro'] = $retornoCobranca['errors'][0]['description'];
+        return response()->json($array,400);
+      }
+     
+     $cobranca = $response->json();
+     // FINAL ADD COBRANÇA
+
+     // pega o payload do pix
+     $response = Http::withHeaders([
+      'Content-Type' => 'application/json',
+      'access_token' => env("ASAAS_TOKEN")
+      ])->get('https://sandbox.asaas.com/api/v3/payments/'.$cobranca['id'].'/pixQrCode'); 
+
+      if ($response->status()!==200){
+         $retornoCobranca = $response->json();
+         $array['erro'] = $retornoCobranca['errors'][0]['description'];
+         return response()->json($array,400);
+      }
+      $payload = $response->json();
+
+        $newAgendamento = new Agendamento();
+        $newAgendamento->usuario_id = $usuario_id;
+        $newAgendamento->servico_id = $servico_id;
+        $newAgendamento->quantidade = $quantidade;
+        $newAgendamento->data_agendamento = $data_agendamento;
+        $newAgendamento->total = $total;
+        $newAgendamento->valor_plataforma = $total * $servico->percentual_plataforma / 100;
+        $code = md5(time().$usuario_id.$servico_id.$data_agendamento.rand(0,9999));
+        $newAgendamento->codigo = $code;
+        $newAgendamento->cobranca_id = $cobranca['id'];
+        $newAgendamento->cobranca_status = $cobranca['status'];
+        $newAgendamento->cobranca_url = $cobranca['invoiceUrl'];
+        $newAgendamento->save();
+        $newAgendamento['pix'] = $payload['payload'];
+        return response()->json($newAgendamento,201);
+      
+
     }
 
+
+    // add cobranca por cartao
     public function store(Request $request)
     {
 
@@ -257,15 +375,11 @@ class AgendamentoController extends Controller
         $newAgendamento->cobranca_status = $cobranca['status'];
         $newAgendamento->cobranca_url = $cobranca['invoiceUrl'];
         $newAgendamento->save();
-
         return response()->json($newAgendamento,201);
-
       } else {
-
         $array['erro'] = "Campos obrigatórios não informados.";
         return response()->json($array,400);
-
-     }
+      }
     }
 }
 
