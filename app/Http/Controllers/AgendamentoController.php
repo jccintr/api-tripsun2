@@ -13,9 +13,7 @@ use App\Models\Prestador;
 class AgendamentoController extends Controller
 {
 
-  public function index()
-
-  {
+  public function index(){
 
     $agendamentos = Agendamento::All();
     if ($agendamentos) {

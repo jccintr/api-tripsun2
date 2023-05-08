@@ -152,5 +152,42 @@ public function getById($id){
       }
     }
 
+    //===========================================================
+// Atualiza os dados para cobrança do  Usuario POST
+//===========================================================
+  public function cadastro($id,Request $request){
+
+    $nome = $request->nome;
+    $telefone = $request->telefone;
+    $documento = $request->documento;
+    $logradouro = $request->logradouro;
+    $numero = $request->numero;
+    $bairro = $request->bairro;
+    $cep = $request->cep;
+    $cidade = $request->cidade;
+    $estado = $request->estado;
+    
+
+    if($nome and $telefone and $documento and $logradouro and $numero and $bairro and $cep and $cidade and $estado) {
+        $usuario = User::find($id);
+        $usuario->name = $nome;
+        $usuario->telefone = $telefone;
+        $usuario->documento = $documento;
+        $usuario->logradouro = $logradouro;
+        $usuario->numero = $numero;
+        $usuario->bairro = $bairro;
+        $usuario->cep = $cep;
+        $usuario->cidade = $cidade;
+        $usuario->estado = $estado;
+        $usuario->save();
+        return response()->json($usuario,200);
+    } else {
+      $array['erro'] = "Campos obrigatórios não informados.";
+      return response()->json($array,400);
+    }
+
+
+  }
+
 
 }

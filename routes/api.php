@@ -91,6 +91,7 @@ Route::get('/usuario/{id}',[UserController::class,'getById']);
 Route::post('usuario/update/{id}',[UserController::class,'updateUsuario']);
 Route::post('usuario/updatepassword/{id}',[UserController::class,'trocaSenhaUsuario']);
 Route::post('usuario/pushtoken/{id}',[UserController::class,'savePushtoken']);
+Route::post('usuario/dados/{id}',[UserController::class,'cadastro']);
 // Agendamento Controller =====================================================
 Route::post('/agendamentos', [AgendamentoController::class, 'store']);
 Route::post('/agendamentos/pix', [AgendamentoController::class, 'store2']);
