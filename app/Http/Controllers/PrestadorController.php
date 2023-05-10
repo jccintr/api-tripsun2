@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Prestador;
 use App\Models\Cidade;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -43,30 +44,58 @@ class PrestadorController extends Controller
      $cnpj = $request->cnpj;
      $ie = $request->ie;
      $imagem = $request->file('logotipo');
+
      $password = $request->password;
 
-      if($imagem && $nome && $email && $password){
-        $imagem_url = $imagem->store('imagens/prestadores','public');
-        $password_hash = password_hash($password, PASSWORD_DEFAULT);
-        $prestador = $this->prestadores->create([
-          'nome' => $nome,
-          'cidade_id' => $request->cidade_id,
-          'logotipo' => $imagem_url,
-          'endereco' => $endereco,
-          'bairro' => $bairro,
-          'cep' => $cep,
-          'contato' => $contato,
-          'telefone' => $telefone,
-          'email' => $email,
-          'cnpj' => $cnpj,
-          'ie' => $ie,
-          'password' => $password_hash
-        ]);
-        return response()->json($prestador,201);
-    } else {
-      $array['erro'] = "Campos obrigatórios não informados.";
-      return response()->json($array,400);
-    }
+     if(!$imagem or !$nome or !$email or !$password){
+        $array['erro'] = "Campos obrigatórios não informados.";
+        return response()->json($array,400);
+     }
+     if (!$password){
+        $array['erro'] = "Senha de acesso não informada.";
+        return response()->json($array,400);
+     }
+
+     $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+     // 1 - Cadastrar o usuario e pegar o id
+     $user = User::select()->where('email', $email)->first();
+     if($user) {
+         $array['erro'] = "Email já cadastrado. Escolha outro por favor.";
+         return response()->json($array,400);
+     }
+     $newUser = new User();
+     $newUser->name = $nome;
+     $newUser->email = $email;
+     $newUser->password = $password_hash;
+     $newUser->telefone = $telefone;
+     $newUser->role =  'prestador';
+     $token = md5(time().rand(0,9999).time());
+     $newUser->token = $token;
+     $newUser->save();
+
+     // 2 - cadastrar o prestador
+
+ 
+    $imagem_url = $imagem->store('imagens/prestadores','public');
+   // $password_hash = password_hash($password, PASSWORD_DEFAULT);
+    $prestador = $this->prestadores->create([
+      'nome' => $nome,
+      'usuario_id' => $newUser->id,
+      'cidade_id' => $request->cidade_id,
+      'logotipo' => $imagem_url,
+      'endereco' => $endereco,
+      'bairro' => $bairro,
+      'cep' => $cep,
+      'contato' => $contato,
+      'telefone' => $telefone,
+      //'email' => $email,
+      'cnpj' => $cnpj,
+      'ie' => $ie
+      //'password' => $password_hash
+    ]);
+    return response()->json($prestador,201);
+    
   }
 //================================================================
 // Recupera um Prestador por Id GET
@@ -76,8 +105,11 @@ class PrestadorController extends Controller
     $prestador = Prestador::find($id);
 
    if ($prestador === null){
+
       return response()->json(['erro'=>'Prestador não encontrado'],404);
    } else {
+      $user = User::find($prestador->usuario_id);
+      $prestador['email'] = $user->email;
       return response()->json($prestador,200);
    }
   }
@@ -97,7 +129,7 @@ class PrestadorController extends Controller
         $prestador->bairro = $request->bairro;
         $prestador->cep = $request->cep;
         $prestador->contato = $request->contato;
-        $prestador->email = $request->email;
+        //$prestador->email = $request->email;
         $prestador->telefone = $request->telefone;
         $prestador->cnpj = $request->cnpj;
         $prestador->ie = $request->ie;

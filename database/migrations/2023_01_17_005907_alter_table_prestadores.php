@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::table('prestadores', function (Blueprint $table) {
-        
+        /*
             $table->string('email')->nullable();
             $table->string('password');
             $table->string('token')->nullable();
-        
+        */
           });
     }
 
@@ -30,11 +30,11 @@ return new class extends Migration
     public function down()
     {
         Schema::table('prestadores', function (Blueprint $table) {
-        
+        /*
             $table->dropColumn('email');
             $table->dropColumn('password');
             $table->dropColumn('token');
-        
+        */
           });
     }
 };
