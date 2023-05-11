@@ -91,6 +91,7 @@ class AgendamentoController extends Controller
 
     } 
 
+    //add cobrança pix
     public function store2(Request $request){
 
       $servico_id = intval($request->servico_id);

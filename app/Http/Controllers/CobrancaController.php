@@ -36,7 +36,7 @@ class CobrancaController extends Controller
         $agendamento->cobranca_status = $status;
         $agendamento->save();
 
-        if( $status=='RECEIVED' or $status == 'CONFIRMED' or $status=='PAYMENT_CONFIRMED') {
+        if( $status=='RECEIVED' or $status == 'CONFIRMED' or $status=='PAYMENT_CONFIRMED' or $status=='PAYMENT_RECEIVED') {
           // envia a notificação de pagamento recebido para o usuario
           $user = User::find($agendamento->usuario_id);
           $response = Http::withHeaders([
@@ -45,7 +45,7 @@ class CobrancaController extends Controller
                    'to' => $user->push_token,
                    'sound'=> 'default',
                    'title'=> 'TripSun',
-                   'body'=> 'Recebemos o seu pagamento ! Obrigado.'
+                   'body'=> 'Recebemos o pagamento da contratação da atividade ! Obrigado.'
              ]);
        }
 
