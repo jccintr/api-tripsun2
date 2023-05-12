@@ -33,7 +33,8 @@ class User extends Authenticatable
         'email',
         'password',
         'telefone',
-        'role',
+        'role'
+        /*
         'documento',
         'cep',
         'logradouro',
@@ -42,7 +43,7 @@ class User extends Authenticatable
         'cidade',
         'estado',
         'push_token',
-        'customer_id'
+        'customer_id'*/
 
     ];
 
