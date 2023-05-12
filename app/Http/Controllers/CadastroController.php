@@ -35,10 +35,11 @@ public function signUp(Request $request) {
         $newUser->role =  'cliente';
         $newUser->token = $token;
         $newUser->save();
+        $u = User::find($newUser->id);
         $servicos_favoritos = [];
-        $user['favoritos'] = $servicos_favoritos;
+        $u['favoritos'] = $servicos_favoritos;
         if($newUser){
-            return response()->json($newUser,201);
+            return response()->json($u,201);
         }
      } else {
        $array['erro'] = "Campos obrigatórios não informados.";
@@ -81,7 +82,7 @@ public function cadastraPrestador(Request $request) {
             return response()->json($newUser,201);
         }
      } else {
-         $array['erro'] = $telefone;
+         $array['erro'] = 'Falha ao cadastrar.';
         return response()->json($array,404);
      }
 
