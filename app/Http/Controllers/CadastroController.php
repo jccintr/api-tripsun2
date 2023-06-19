@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Favorito;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class CadastroController extends Controller
 {
@@ -24,23 +26,27 @@ public function signUp(Request $request) {
             $array['erro'] = "Email já cadastrado.";
             return response()->json($array,400);
         }
-
-        $password_hash = password_hash($password, PASSWORD_DEFAULT);
-        $token = md5(time().rand(0,9999).time());
+        //cadastra o novo usuario
+        $password_hash = Hash::make($password);
         $newUser = new User();
         $newUser->name = $name;
         $newUser->email = $email;
         $newUser->password = $password_hash;
         $newUser->telefone = $telefone;
         $newUser->role =  'cliente';
-        $newUser->token = $token;
         $newUser->save();
-        $u = User::find($newUser->id);
-        $servicos_favoritos = [];
-        $u['favoritos'] = $servicos_favoritos;
-        if($newUser){
-            return response()->json($u,201);
+        //realiza login com o novo usuario
+        $credentials = ['email'=> $newUser->email,'password'=>$password];
+        if (!Auth::attempt($credentials)) {
+            return response()->json(['erro'=>'Email e ou senha inválidos'],401);
         }
+        $loggedUser = Auth::User();
+        $token = Auth::User()->createToken('tripsun');
+        $loggedUser['token'] = $token->plainTextToken;
+        $servicos_favoritos = [];
+        $loggedUser['favoritos'] = $servicos_favoritos;
+        return response()->json($loggedUser,201);
+       
      } else {
        $array['erro'] = "Campos obrigatórios não informados.";
        return response()->json($array,400);

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -18,8 +19,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => "Julio Cesar",
             'email' => "jccintr@gmail.com",
-            'password' => password_hash('123', PASSWORD_DEFAULT),
-            'token' => md5(time().rand(0,9999).time()),
+            'password' => Hash::make('123'),
             'telefone' => "35-99912-2008",
             'role' => 'admin'
         ]);  // id 1
@@ -27,8 +27,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => "Tripsun",
             'email' => "tripsunoficial@gmail.com",
-            'password' => password_hash('123', PASSWORD_DEFAULT),
-            'token' => md5(time().rand(0,9999).time()),
+            'password' => Hash::make('123'),
             'telefone' => "13-96563-1313",
             'role' => 'admin'
         ]);  // id 2
@@ -36,8 +35,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => "Joaquim Teixeira",
             'email' => "joaquim@gmail.com",
-            'password' => password_hash('123', PASSWORD_DEFAULT),
-            'token' => md5(time().rand(0,9999).time()),
+            'password' => Hash::make('123'),
             'telefone' => "12-99912-2008",
             'role' => 'cliente',
             'documento' => '02761110609',
@@ -53,8 +51,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => "Elisa Santos",
             'email' => "elisa@gmail.com",
-            'password' => password_hash('123', PASSWORD_DEFAULT),
-            'token' => md5(time().rand(0,9999).time()),
+            'password' => Hash::make('123'),
             'telefone' => "35-99912-2008",
             'role' => 'cliente',
             'documento' => '02761110609',
@@ -72,8 +69,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => "Service Provider 1",
             'email' => "sp1@gmail.com",
-            'password' => password_hash('123', PASSWORD_DEFAULT),
-            'token' => md5(time().rand(0,9999).time()),
+            'password' => Hash::make('123'),
             'telefone' => "11-98765-4321",
             'role' => 'prestador'
         ]);  // id 5
@@ -81,8 +77,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => "Service Provider 2",
             'email' => "sp2@gmail.com",
-            'password' => password_hash('123', PASSWORD_DEFAULT),
-            'token' => md5(time().rand(0,9999).time()),
+            'password' => Hash::make('123'),
             'telefone' => "11-98765-4321",
             'role' => 'prestador'
         ]);  // id 6
@@ -90,8 +85,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => "Service Provider 3",
             'email' => "sp3@gmail.com",
-            'password' => password_hash('123', PASSWORD_DEFAULT),
-            'token' => md5(time().rand(0,9999).time()),
+            'password' => Hash::make('123'),
             'telefone' => "11-98765-4321",
             'role' => 'prestador'
         ]);  // id 7
@@ -99,8 +93,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => "Service Provider 4",
             'email' => "sp4@gmail.com",
-            'password' => password_hash('123', PASSWORD_DEFAULT),
-            'token' => md5(time().rand(0,9999).time()),
+            'password' => Hash::make('123'),
             'telefone' => "11-98765-4321",
             'role' => 'prestador'
         ]);  // id 8

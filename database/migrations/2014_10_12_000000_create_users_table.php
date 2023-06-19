@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('telefone');
             $table->string('role')->nullable(); // admin - cliente - prestador
-            $table->string('token')->nullable();
+            //$table->string('token')->nullable();
             $table->timestamp('token_expire_at')->nullable();
             //campos usados para criar cobranças
             $table->string('customer_id')->nullable();
