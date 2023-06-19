@@ -7,6 +7,7 @@ use App\Models\Cidade;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 
 class PrestadorController extends Controller
 {
@@ -56,7 +57,7 @@ class PrestadorController extends Controller
         return response()->json($array,400);
      }
 
-     $password_hash = password_hash($password, PASSWORD_DEFAULT);
+     $password_hash = Hash::make($password); //password_hash($password, PASSWORD_DEFAULT);
 
      // 1 - Cadastrar o usuario e pegar o id
      $user = User::select()->where('email', $email)->first();
@@ -70,8 +71,8 @@ class PrestadorController extends Controller
      $newUser->password = $password_hash;
      $newUser->telefone = $telefone;
      $newUser->role =  'prestador';
-     $token = md5(time().rand(0,9999).time());
-     $newUser->token = $token;
+     //$token = md5(time().rand(0,9999).time());
+     //$newUser->token = $token;
      $newUser->save();
 
      // 2 - cadastrar o prestador
