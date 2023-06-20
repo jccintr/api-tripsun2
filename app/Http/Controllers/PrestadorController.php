@@ -57,7 +57,7 @@ class PrestadorController extends Controller
         return response()->json($array,400);
      }
 
-     $password_hash = Hash::make($password); //password_hash($password, PASSWORD_DEFAULT);
+     $password_hash = Hash::make($password);
 
      // 1 - Cadastrar o usuario e pegar o id
      $user = User::select()->where('email', $email)->first();
@@ -90,11 +90,9 @@ class PrestadorController extends Controller
       'cep' => $cep,
       'contato' => $contato,
       'telefone' => $telefone,
-      //'email' => $email,
       'cnpj' => $cnpj,
       'ie' => $ie
-      //'password' => $password_hash
-    ]);
+      ]);
     return response()->json($prestador,201);
     
   }
